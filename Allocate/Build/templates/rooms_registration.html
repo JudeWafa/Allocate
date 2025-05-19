@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate Suitable Rooms</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">  
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <link rel="stylesheet" href="rooms_registration_styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <p id="text-logo">Allocate</p>
+            <ul id="header-tabs">
+                <li id="schedule-tab" class="other-tabs"><a href="/schedule_registration.html">Generate Schedule</a></li>
+                <li id="rooms-tab" class="current-tab"><a href="/rooms_registration.html">Suitable Rooms</a></li>
+            </ul>
+        </header>
+        <main>
+            <div class="side-wrapper">
+                <div class="side-header">
+                    <h1>Generate Suitable Rooms</h1>
+                </div>
+                <div clas="more-text">
+                    <p class="required-text"><span class="red-star">*</span> Required Field</p>
+                    <p class="request-info">Generate a list of the most suitable rooms for a course exam</p>
+                </div>
+            </div>
+            <div class="form-wrapper">
+                <h1 class="form-header">Suitable Rooms</h1>
+                <form action="" method="">
+                    <div id="course-data">
+                        <label for="courseId">Course Id <span class="red-star">*</span></label>
+                        <input type="text" id="courseId" placeholder="11212">
+                        <label for="courseTitle">Course Title <span class="red-star">*</span></label>
+                        <input type="text" id="courseTitle" placeholder="Data Structures and Algorithms" readonly>
+                    </div>
+                    <div class="button-wrapper">
+                        <button id="generate" onclick="generateSchedule()">Generate</button>
+                    </div>
+                </form>
+                <div id="rooms-wrapper">
+                    <div class="room-info">
+                        <label for="studentCount">Number of Students Registered</label>
+                        <input type="text" id="studentCount" readonly>
+                        <label for="roomCount">Number of Suitable Rooms</label>
+                        <input type="text" id="roomCount" readonly>
+                    </div>
+                    <label>Suitable Rooms</label>
+                    <div id="download-container">
+                        <span class="filename" id="filename">SuitableRooms</span>
+                        <button class="download-button" onclick="downloadFile()">Download</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <img src="images/bg.png" id="bottom-image">
+    </div>
+    <footer>
+        <img id="psut-logo" src="/images/psut_logo_white.png">
+        <ul class="footer-options">
+            <li><a href="/about">About Us</a></li>
+            <li><a href="/contact">Contact</a></li>
+        </ul>
+    </footer>   
+
+    <script>
+        
+
+    </script>
+
+</body>
+</html> 

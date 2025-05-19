@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate Exam Schedule</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">  
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <link rel="stylesheet" href="static/CSS/schedule_registration_styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <p id="text-logo">Allocate</p>
+            <ul id="header-tabs">
+                <li id="schedule-tab" class="current-tab"><a href="/schedule_registration.html">Generate Schedule</a></li>
+                <li id="rooms-tab" class="other-tabs"><a href="/rooms_registration.html">Suitable Rooms</a></li>
+            </ul>
+        </header>
+        <main>
+            <div class="side-wrapper">
+                <div class="side-header">
+                    <h1>Generate Exam Schedule</h1>
+                </div>
+                <div clas="more-text">
+                    <p class="required-text"><span class="red-star">*</span> Required Field</p>
+                    <p class="request-info">Generate an exam schedule for all courses this semester</p>
+                </div>
+            </div>
+            <div class="form-wrapper">
+                <h1 class="form-header">Generate Schedule</h1>
+                <form action="" method="post">
+                    <div id="input-data">
+                        <label for="startDate">Start Date <span class="red-star">*</span></label>
+                        <input type="date" id="startDate" name="startDate">
+                        <label for="endDate">End Date <span class="red-star">*</span></label>
+                        <input type="date" id="endDate" name="endDate">
+                    </div>
+                    <div class="button-wrapper">
+                        <button id="generate" onclick="generateSchedule()">Generate</button>
+                    </div>
+                </form>
+                <div id="status"></div>
+                <label id="download-label">Exam schedule from </label>
+                <div id="download-container">
+                    <span class="filename" id="filename">ExamSchedules.csv</span>
+                    <button class="download-button" onclick="downloadFile()"><a href="/downloadFile" download="ExamSchedule.csv">Download</a></button>
+                </div>
+            </div>
+        </main>
+        <img src="static/images/bg.png" id="bottom-image">
+    </div>
+    <footer>
+        <img id="psut-logo" src="static/images/psut_logo_white.png">
+        <ul class="footer-options">
+            <li><a href="/about">About Us</a></li>
+            <li><a href="/contact">Contact</a></li>
+        </ul>
+    </footer>   
+
+    <script>
+        function generateSchedule() {
+            const status = document.getElementById('status');
+            const downloadLink = document.getElementById('download-link');
+            
+            status.textContent = "Generating schedule, please wait...";
+            downloadLink.style.display = 'none';
+
+            fetch('/GenerateSchedule', { method: 'POST' })
+                .then(response => {
+                if (response.ok) {
+                    status.textContent = "Schedule generated!";
+                    downloadLink.style.display = 'inline';
+                } else {
+                    status.textContent = "An error occurred.";
+                }
+                });
+        }
+
+    </script>
+
+</body>
+</html> 

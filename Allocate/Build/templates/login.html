@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="static/CSS/login_styles.css">
+</head>
+<body>
+    <div class="container">
+        <div id="text_wrapper">
+            <p id="slogan">Booking Made Easier</p>
+        <p id="text-logo">Allocate</p>
+        </div>
+        <div class="login-group">
+            <img src="static/images/psut_logo.png" id="psut_logo">
+            <form method="post" action="">
+                <input type="text" id="email" name="email" placeholder="Email">
+                <input type="password" id="password" name="password" placeholder="Password">
+                <div id="password_wrapper">
+                    <a href="/forgot_password" type="button" id="forgot_password">Forgot Password</a>
+                </div>
+                <button type="submit" id="login_button">Login</button>
+            </form>
+        </div>
+        <img src="static/images/bg.png" id="bottom-image">
+    </div>
+    <footer>
+        <ul class="footer-options">
+            <li><a href="/about">About Us</a></li>
+            <li><a href="/contact">Contact</a></li>
+        </ul>
+    </footer>
+</body>
+</html>

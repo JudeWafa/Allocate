@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Reservations</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">  
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ url_for('static', filename = 'CSS/reservation_form_styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <p id="text-logo">Allocate</p>
+            <ul id="header-tabs">
+                <li id="home-tab" class="other-tabs"><a href="/Homepage/{{id}}">Home</a></li>
+                <li id="requests-button" class="other-tabs"><a href="/ViewRequests/{{id}}">My Requests</a></li>
+                <li id="reservations-button" class="other-tabs"><a href="/ViewReservations/{{id}}">Reservations</a></li>
+                <li id="reserve-button"><a href="/ReserveForm/{{id}}">Reserve Now</a></li>
+            </ul>
+        </header>
+        <main>
+            <div class="side-wrapper">
+                <div class="side-header">
+                    <h1>Reserve a Facility Now, for Anytime and Anywhere</h1>
+                </div>
+                <div clas="more-text">
+                    <p class="required-text"><span class="red-star">*</span> Required Field</p>
+                    <p class="request-info">Submitting a reservation request DOES NOT guarantee approval</p>
+                    <p class="request-info">You can modify your reservation request as long as it is not approved or rejected</p>
+                </div>
+            </div>
+            <div class="form-wrapper">
+                <h1 class="form-header">Reservation Form</h1>
+                <form action="" method="post">
+                    <div class="section">
+                        <div class="section-header">
+                            <span>Event Details</span>
+                        </div>
+                        <div class="section-content">
+                            <label for="event-title">Event Title <span class="red-star">*</span></label> <br>
+                            <input name="eventTitle" type="text" id="event-title" required autocomplete="off"> <br>
+                            <label>Event Type <span class="red-star">*</span></label> <br>
+                            <select name="eventType" id="event-type">
+                                <option value="conference" id="conference">Conference</option>
+                                <option value="lecture" id="lecture">Lecture</option>
+                                <option value="training" id="training">Training Course</option>
+                                <option value="meeting" id="meeting">Meeting/Gathering</option>
+                                <option value="workshop" id="workshop">Workshop</option>
+                                <option value="seminar" id="seminar">Seminar</option>
+                                <option value="agreements" id="agreements">Agreements</option>
+                                <option value="extracurricular" id="extracurricular">Extracurricular Activity</option>
+                                <option value="guestReception" id="guestReception">Guest Reception</option>
+                                <option value="fundedProjects" id="fundedProjects">Funded Projects</option>
+                                <option value="ceremony" id="ceremony">Ceremony</option>
+                                <option value="other" id="event-other">Other</option>
+                            </select>
+                            <div id="event-other-wrapper">
+                                <label for="event-other-input">Other: <span class="red-star">*</span></label>
+                                <input name="eventOtherInput" type="text" id="event-other-input" placeholder="Specify event type">
+                            </div>
+                            <label for="agenda">Agenda <span class="red-star">*</span></label> <br>
+                            <input name="agenda" type="text" id="agenda" placeholder="Link to agenda document" autocomplete="off">
+                        </div>
+                    
+                    <div class="section">
+                        <div class="section-header">
+                            <span>Location</span>
+                        </div>
+                        <div class="section-content">
+                            <label for="facility-type">Facility Type <span class="red-star">*</span></label> <br>
+                            <select name="facilityType" id="facility-type" required>
+                                <option value="Auditorium">Auditorium</option>
+                                <option value="Lab">Lab</option>
+                                <option value="Room">Lecture Room</option>
+                                <option value="Outdoor">Outdoor Space</option>
+                            </select> <br>
+                            <label for="capacity">Capacity <span class="red-star">*</span></label> <br>
+                            <input name="capacity" type="number" id="capacity" value="0" step="5" required> <br>
+                            <label for="building">Building <span class="red-star">*</span></label> <br>
+                            <select name="building" id="building" required>
+                                <option value=1>King Hussein School of Computing Sciences</option>
+                                <option value=2>King Abdullah II School of Engineering</option>
+                                <option value=3>King Talal School of Business Technology</option>
+                            </select> <br>
+                            <label for="date">Date <span class="red-star">*</span></label> <br>
+                            <input name="date" type="date" id="date"> <br>
+                            <label for="start_time">Start Time <span class="red-star">*</span></label> <br>
+                            <input name="start_time" type="time" id="start_time" ><br>
+                            <label for="end_time">End Time <span class="red-star">*</span></label> <br>
+                            <input name="end_time" type="time" id="end_time" ><br>
+                            <label for="facility">Facilities <span class="red-star">*</span></label> <br> 
+                            <select name="facility" id="facility" required>
+                                <script>
+                                    document.addEventListener("DOMContentLoaded", function () {
+                                        const dateInput = document.getElementById('date');
+                                        const startInput = document.getElementById('start_time');
+                                        const endInput = document.getElementById('end_time');
+                                        const buildingInput = document.getElementById('building');
+                                        const typeInput = document.getElementById('facility-type');
+                                        const capacityInput = document.getElementById('capacity');
+
+
+                                        // Attach event listeners
+                                        [dateInput, startInput, endInput, buildingInput, typeInput, capacityInput].forEach(input => {
+                                            input.addEventListener('change', checkAvailability);
+                                        });
+
+                                        function checkAvailability() {
+                                            const date = dateInput.value;
+                                            const startTime = startInput.value;
+                                            const endTime = endInput.value;
+                                            const building = buildingInput.value;
+                                            const type = typeInput.value;
+                                            const capacity = capacityInput.value;
+
+                                            // Only call backend if all 3 fields have values
+                                            if (!date || !startTime || !endTime|| !building || !type || !capacity) return;
+
+                                            fetch('/checkAvailability', {
+                                                method: 'POST',
+                                                headers: {'Content-Type': 'application/json'},
+                                                body: JSON.stringify({date, start: startTime, end: endTime, building: building, type: type, capacity: capacity})
+                                            })
+                                            .then(res => res.json())
+                                            .then(data => {
+                                                const list = document.getElementById('facility');
+                                                list.innerHTML = ''; // Clear previous results
+
+                                                if (data.length === 0) {
+                                                    list.innerHTML = '<option>No facilities available for this time.</option>';
+                                                } else {
+                                                    data.forEach(facility => {
+                                                        const item = document.createElement('option');
+                                                        item.text = facility.name;
+                                                        list.appendChild(item);
+                                                    });
+                                                }
+                                            });
+                                        }
+                                    });
+                                    // fetch('/ReserveForm', {
+                                    //             method: 'POST'})
+                                </script>
+                            </select> 
+                        </div>
+                    </div>
+                    <div class="section">
+                        <div class="section-header">
+                            <span>Guests</span>
+                        </div>
+                        <div class="section-content">
+                            <label for="guest-count">Number of Guests <span class="red-star">*</span></label>
+                            <div id="guest-count-wrapper">
+                                <input name="guestCount" type="number" step="1" id="guest-count" value="0" required>
+                                <button id="generateBtn" onclick="generateGuestFields()">Generate</button>
+                            </div>
+                            <div id="guest-fields"></div>
+                        </div>
+                    </div>
+                    <div class="section">
+                        <div class="section-header">
+                            <span>Funds</span>
+                        </div>
+                        <div class="section-content">
+                            <label for="funding-source">Funding Source <span class="red-star">*</span></label>
+                            <input name="fundingSource" type="text" id="funding-source" placeholder="None" required>
+                            <label for="funding-amount">Funding Amount <span class="red-star">*</span></label>
+                            <input name="fundingAmount" id="funding-amount" type="number" placeholder="0" required>
+                        </div>
+                    </div>
+                    <div class="section">
+                        <div class="section-header">
+                            <span>Requirements</span>
+                        </div>
+                        <div class="section-content">
+                            <br>
+                            <label class="subheader">Preparations</label>
+                            <br>
+                            <div id="preparations-checkbox" class="checkbox-grid">
+                                <div><label><input type="checkbox" name="preparations" value="flowers" id="flowers"> Flowers</label></div>
+                                <div><label><input type="checkbox" name="preparations" value="backdrop" id="backdrop"> Backdrop</label></div>
+                                <div><label><input type="checkbox" name="preparations" value="banner" id="banner"> Banner/Rollup</label></div>
+        
+                                <div><label><input type="checkbox" name="preparations" value="printedMaterials" id="printed-materials"> Printed Materials</label></div>
+                                <div><label><input type="checkbox" name="preparations" value="laptop" id="laptop"> Laptop</label></div>
+                                <div class="with-input">
+                                    <label><input type="checkbox" name="preparations" value="giftBag" id="gift-bag"> Gift Bags:</label>
+                                    <input type="number" step="1" min="1" id="gift-bag-input" name="giftNum" disabled>
+                                </div>
+                            
+                                <div><label><input type="checkbox" name="preparations" value="presentation" id="presentation"> Presentation</label></div>
+                                <div><label><input type="checkbox" name="preparations" value="display" id="display"> Screen/Projection</label></div>
+                                <div><label><input type="checkbox" name="preparations" value="translation" id="translation"> Translation</label></div>
+                            
+                                <div><label><input type="checkbox" name="preparations" value="soundEquipment" id="sound-equipment"> Sound Equipment</label></div>
+                                <div><label><input type="checkbox" name="preparations" value="guidanceBoards" id="guidance-boards"> Guidance Boards</label></div>
+                                <div class="with-input">
+                                    <label><input type="checkbox" name="preparations" value="badges" id="badges"> Badges:</label>
+                                    <input type="number" step="1" min="1" id="badges-input" name="badgeNum" disabled>
+                                </div>
+                            
+                                <div><label><input type="checkbox" name="electricalEquipment" value="electricalEquipment" id="electrical-equipment"> Electrical Equipment</label></div>
+                                <div><label><input type="checkbox" name="preparations" value="tour" id="tour"> University Tour</label></div>
+                                <div><label><input type="checkbox" name="preparations" value="stationary" id="stationary"> Stationary</label></div>
+                            
+                                <div><label><input type="checkbox" name="preparations" value="visualEquipment" id="visual-equipment"> Visual Equipment</label></div>
+                                <div class="with-input">
+                                    <label><input type="checkbox" name="preparations" value="other" id="preparations-other"> Other:</label>
+                                    <input type="text" id="preparations-other-input" name="otherInput" disabled>
+                                </div>
+                            </div>
+
+                            <!-- Media Coverage -->
+                            <br>
+                            <label class="subheader">Media Coverage</label>
+                            <br>
+                            <div class="checkbox-grid">
+                                <label><input type="checkbox" name="media" value="photoVideo"> Photo/Video</label>
+                                <label><input type="checkbox" name="media" value="press"> Press Release</label>
+                                <label><input type="checkbox" name="media" value="socialMedia"> Social Media</label>
+                            </div>
+
+                            <!-- Transport -->
+                            <br>
+                            <label class="subheader">Transport</label>
+                            <br>
+                            <div class="checkbox-grid">
+                                <label><input type="checkbox" name="transportation" value="emptyParking"> Empty Parking Spaces</label>
+                                <label><input type="checkbox" name="transportation" value="informSecurity"> Inform Security</label>
+                                <label><input type="checkbox" name="transportation" value="car"> Car/Bus</label>
+                            </div>
+
+                            <!-- Hospitality -->
+                            <br>
+                            <label class="subheader">Hospitality</label>
+                            <br>
+                            <div class="checkbox-grid">
+                                <label><input type="checkbox" name="hospitality" value="breakfast"> Breakfast</label>
+                                <label><input type="checkbox" name="hospitality" value="lunch"> Lunch</label>
+                                <label><input type="checkbox" name="hospitality" value="dinner"> Dinner</label>
+                                <label><input type="checkbox" name="hospitality" value="regular"> Regular (Tea/Coffee)</label>
+                                <label><input type="checkbox" name="hospitality" value="vip"> VIP</label>
+                                <label><input type="checkbox" name="hospitality" value="coffee"> Coffee Break</label>
+                                <label><input type="checkbox" name="hospitality" value="juice"> Juice</label>
+                                <label><input type="checkbox" name="hospitality" value="pastries"> Pastries</label>
+                                <label><input type="checkbox" name="hospitality" value="biscuits"> Biscuits</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="button-wrapper">
+                        <button type="clear" id="clear-button"> Clear </button>
+                        <button type="submit" id="submit-button"> Submit </button>
+                    </div>
+                </form>
+            </div>
+        </main>
+        <img src="{{ url_for('static', filename = 'images/bg.png') }}" id="bottom-image">
+    </div>
+    <footer>
+        <img id="psut-logo" src="{{ url_for('static', filename = 'images/psut_logo_white.png') }}">
+        <ul class="footer-options">
+            <li><a href="/about">About Us</a></li>
+            <li><a href="/contact">Contact</a></li>
+        </ul>
+    </footer>   
+
+    <script>
+        
+
+        document.addEventListener('DOMContentLoaded', function () {
+        const eventTypeSelect = document.getElementById('event-type');
+        const otherWrapper = document.getElementById('event-other-wrapper');
+        eventTypeSelect.addEventListener('change', function () {
+            if (eventTypeSelect.value === 'other') {
+                otherWrapper.style.display = 'block';
+            } else {
+                otherWrapper.style.display = 'none';
+            }
+        });
+        });
+
+        const today = new Date().toISOString().split("T")[0];
+        document.querySelectorAll('input[type="date"]').forEach(input => {
+            input.setAttribute("min", today);
+        });
+
+        function generateGuestFields() {
+            const count = parseInt(document.getElementById('guest-count').value, 10);
+            const container = document.getElementById('guest-fields');
+            container.innerHTML = ''; 
+        
+            for (let i = 0; i < count; i++) {
+                const row = document.createElement('div');
+                row.className = 'guest-row';
+        
+                const nameInput = document.createElement('input');
+                nameInput.type = 'text';
+                nameInput.placeholder = `Guest ${i + 1}'s Name`;
+                nameInput.className = 'guest-name';
+                nameInput.required = true;
+                nameInput.name = "guestName" + i
+        
+                // const cvWrapper = document.createElement('div');
+                // cvWrapper.className = 'cv-upload-wrapper';
+        
+                const cvInput = document.createElement('input');
+                cvInput.type = 'text';
+                cvInput.className = 'cv-input';
+                cvInput.placeholder = 'Link to CV (optional)';
+                cvInput.autocomplete = 'off';
+                cvInput.name = "guestCV" + i
+        
+                // cvWrapper.appendChild(cvInput);
+                row.appendChild(nameInput);
+                row.appendChild(cvInput);
+                container.appendChild(row);
+            }
+        }
+
+        // checkbox input 
+        const toggleInputOnCheck = (checkboxId, inputId) => {
+        document.getElementById(checkboxId).addEventListener('change', function() {
+            document.getElementById(inputId).disabled = !this.checked;
+        });
+        };
+
+        toggleInputOnCheck('gift-bag', 'gift-bag-input');
+        toggleInputOnCheck('badges', 'badges-input');
+        toggleInputOnCheck('preparations-other', 'preparations-other-input');
+
+    </script>
+
+</body>
+</html> 

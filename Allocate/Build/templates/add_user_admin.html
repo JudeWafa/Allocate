@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add User</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">  
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <link rel="stylesheet" href="static/CSS/add_user_admin_styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <p id="text-logo">Allocate</p>
+            <ul id="header-tabs">
+                <li id="add-user-tab" class="current-tab"><a href="/add_user_admin.html">Add User</a></li>
+                <li id="add-club-tab" class="other-tabs"><a href="/add_club_admin.html">Add Club</a></li>
+            </ul>
+        </header>
+        <main>
+            <div class="side-wrapper">
+                <div class="side-header">
+                    <h1>Add a User</h1>
+                </div>
+                <div clas="more-text">
+                    <p class="required-text"><span class="red-star">*</span> Required Field</p>
+                    <p class="request-info">Add a user to the system</p>
+                    <p class="request-info">Users are limited to: Club Committee, Instructors, Student Affairs, and Registration</p>
+                </div>
+            </div>
+            <div class="form-wrapper">
+                <h1 class="form-header">Add User Form</h1>
+                <form action="/AddUser" method="post">
+                    <div class="section" id="user-details">
+                        <div class="section-header">
+                            <span>User Details</span>
+                        </div>
+                        <div class="section-content">
+                            <label for="university-id">University Id <span class="red-star">*</span></label>
+                            <input type="text" id="university-id" name="uniId" placeholder="University Id ( Student Id, Instructor Id, etc. )" required autocomplete="off">
+                            <label for="name">Full Name <span class="red-star">*</span></label>
+                            <input type="text" id="name" name="name" placeholder="Full Name" required autocomplete="off">
+                            <label for="email">Email<span class="red-star">*</span></label>
+                            <input type="text" id="email" name="email" placeholder="University Email" required autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="section">
+                        <div class="section-header">
+                            <span>User Role</span>
+                        </div>
+                        <div class="section-content">
+                            <label>User Type <span class="red-star">*</span></label> <br>
+                            <select name="userType" id="user-type">
+                                <option value="0" id="club-type">Club Committee</option>
+                                <option value="1" id="instructor-type">Instructor</option>
+                                <option value="2" id="registration-type">Registration</option>
+                                <option value="3" id="affairs-type">Student Affairs</option>
+                                <option value="4" id="technician-type">Technician</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- select section to show based on select value -->
+                    <div class="section" id="club-details">
+                        <div class="section-header">
+                            <span>Club</span>
+                        </div>
+                        <div class="section-content">
+                            <label for="club">Club <span class="red-star">*</span></label>
+                            <select name="clubs" id="clubs">
+                                <!-- javascript populates clubs -->
+                                {% for c in clubs %}
+                                    <option value="{{c}}">{{c}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="section">
+                        <div class="section-header">
+                            <span>Student Affairs</span>
+                        </div>
+                        <div class="section-content">
+                            <label for="position">Position <span class="red-star">*</span></label>
+                            <input id="position" type="text" name="position" placeholder="Position">
+                        </div>
+                    </div>
+                    <div class="section">
+                        <div class="section-header">
+                            <span>More Info</span>
+                        </div>
+                        <div class="section-content">
+                            <label for="department">Department <span class="red-star">*</span></label>
+                            <select name="department" id="department">
+                                <!-- javascript populates departments -->
+                                {% for d in departments %}
+                                    <option value="{{d}}">{{d}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="button-wrapper">
+                        <input type="reset">
+                        <input type="submit">
+                    </div>
+                </form>
+                <div id="message-box">
+                    <span></span>
+                </div>
+            </div>
+        </main>
+        <img src="static/images/bg.png" id="bottom-image">
+    </div>
+    <footer>
+        <img id="psut-logo" src="static/images/psut_logo_white.png">
+        <ul class="footer-options">
+            <li><a href="/about">About Us</a></li>
+            <li><a href="/contact">Contact</a></li>
+        </ul>
+    </footer>   
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const userTypeSelect = document.getElementById("user-type");
+            const clubSection = document.getElementById("club-details");
+            const positionSection = document.getElementById("position").closest(".section");
+            const departmentSection = document.getElementById("department").closest(".section");
+            const form = document.querySelector("form");
+            const messageBox = document.querySelector("#message-box span");
+        
+            const toggleSections = [clubSection, positionSection, departmentSection];
+        
+            function updateVisibleSections() {
+                const selectedValue = userTypeSelect.value;
+        
+                // Hide all optional sections
+                toggleSections.forEach(section => section.style.display = "none");
+        
+                if (selectedValue === "0") {
+                    clubSection.style.display = "block";
+                } else if (selectedValue === "3") {
+                    positionSection.style.display = "block";
+                } else if (["1", "2", "4"].includes(selectedValue)) {
+                    departmentSection.style.display = "block";
+                }
+            }
+        
+            userTypeSelect.addEventListener("change", updateVisibleSections);
+            updateVisibleSections(); // Run once on load
+        
+            form.addEventListener("submit", function (e) {
+                e.preventDefault();
+                messageBox.style.color = "red";
+                messageBox.textContent = "";
+        
+                const universityId = document.getElementById("university-id").value.trim();
+                const fullName = document.getElementById("name").value;
+                const email = document.getElementById("email").value.trim();
+                const department = document.getElementById("department").value.trim();
+                const userType = userTypeSelect.value;
+                const position = document.getElementById("position").value.trim();
+                const club = document.getElementById("clubs").value.trim();
+        
+                let errors = [];
+        
+                // Empty field validation
+                if (!universityId || !fullName || !email) {
+                    errors.push("University ID, Full Name, and University Email are required.");
+                }
+        
+                if (userType === "0" && !club) {
+                    errors.push("Please select a club.");
+                }
+        
+                if (userType === "4" && !position) {
+                    errors.push("Please enter a position.");
+                }
+        
+                if (["1", "2", "5"].includes(userType) && !department) {
+                    errors.push("Please select a department.");
+                }
+        
+                // Name validation
+                const nameRegex = /^[A-Za-z\s'-]+$/;
+                if (!nameRegex.test(fullName)) {
+                    errors.push("Name must not contain numbers or special characters.");
+                }
+        
+                // ID validation
+                const idRegex = /^[0-9]+$/;
+                if (!idRegex.test(universityId)) {
+                    errors.push("University ID must be numeric.");
+                }
+        
+                if (errors.length > 0) {
+                    messageBox.innerHTML = errors.map(err => `${err}<br>`).join("");
+                    const sideWrapper = document.querySelector(".side-wrapper");
+                    sideWrapper.innerHTML = `
+                        <div class="side-header">
+                            <h1>Failed to add user</h1>
+                        </div>
+                    `;
+                } else {
+                    messageBox.style.color = "green";
+                    messageBox.textContent = "User successfully validated and submitted!";
+                    
+                    // Update the side-wrapper content
+                    const sideWrapper = document.querySelector(".side-wrapper");
+                    sideWrapper.innerHTML = `
+                        <div class="side-header">
+                            <h1>User added successfully!</h1>
+                        </div>
+                    `;
+                    form.submit();
+                }
+            });
+        });
+    </script>
+               
+
+</body>
+</html> 

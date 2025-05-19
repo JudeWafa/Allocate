@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Reservations</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">  
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ url_for('static', filename = 'CSS/reservations_student_styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <p id="text-logo">Allocate</p>
+            <ul id="header-tabs">
+                <li id="home-tab" class="other-tabs"><a href="/Homepage/{{id}}">Home</a></li>
+                <li id="requests-button" class="other-tabs"><a href="/ViewRequests/{{id}}">My Requests</a></li>
+                <li id="reservations-button" class="current-tab"><a href="/ViewReservations/{{id}}">Reservations</a></li>
+                <li id="reserve-button"><a href="/ReserveForm/{{id}}">Reserve Now</a></li>
+            </ul>
+        </header>
+        <main>
+            <div id="title-section">
+                <h1>Reservations</h1>
+            </div>      
+            <div id="table-wrapper">
+                <table>
+                    <div class="table-entries">
+                        <thead>
+                            <tr>
+                                <th class="empty"></th>
+                                <th>ID</th>
+                                <th>Title</th>
+                                <th>Facility</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Location</th>
+                                <th>Problem</th>
+                                <th class="icons-cell">  
+                                    <div class="icon-container">
+                                        <span class="material-symbols-outlined">sort</span>
+                                        <span class="material-symbols-outlined">filter_list</span>
+                                    </div>  
+                                    
+                                </th>
+                            </tr>
+                        </thead>
+                        {% for res in reservations %}
+                        <tr>
+                            <td class="empty"></td> 
+                            <td>{{ res.reservationId }}</td>
+                            <td>{{ res.title }}</td>
+                            <td>{{ res.facilityName }}</td>
+                            <!-- <td>{{ res.title }}</td> -->
+                            <td>{{ res.date }}</td>
+                            <td>{{ res.start }}</td>
+                            <td>{{ res.location }}</td>
+                            {% if res.reportId is none %}
+                            <td><button class="problem-report"><a href="/ReportIssue/{{res.reservationId}}">Report...</a></button></td>
+                            {% else %}
+                            <td><button class="problem-view"><a href="/ViewReport/{{res.reportId}}/{{id}}">View Report</a></button></td>
+                            {% endif %}
+                            <td class="edit-cell"></td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="11">No reservations found.</td>
+                        </tr>
+                        {% endfor %}
+<!--     
+                        <tbody>
+                            <tr>
+                                <td class="empty"></td>
+                                <td>1234</td>
+                                <td>IT103</td>
+                                <td>05/11/2025</td>
+                                <td>13:00</td>
+                                <td>IT</td>
+                                <td><button class="problem-view">View Report</button></td>
+                                <td class="edit-cell"></td>
+                            </tr>
+                            <tr>
+                                <td class="empty"></td>
+                                <td>7656</td>
+                                <td>Friendship</td>
+                                <td>18/11/2025</td>
+                                <td>08:00</td>
+                                <td>Auditorium</td>
+                                <td><button class="problem-report" onclick="window.location.href='report_student.html'">Report...</button></td>
+                                <td class="edit-cell"></td>
+                            </tr>
+                            <tr>
+                                <td class="empty"></td>
+                                <td>5679</td>
+                                <td>ENG301</td>
+                                <td>30/01/2025</td>
+                                <td>08:00</td>
+                                <td>ENG</td>
+                                <td><button class="problem-blocked">Report...</button></td>
+                                <td class="edit-cell"></td>
+                            </tr>
+                            <tr>
+                                <td class="empty"></td>
+                                <td>1234</td>
+                                <td>IT103</td>
+                                <td>05/11/2025</td>
+                                <td>13:00</td>
+                                <td>IT</td>
+                                <td><button class="problem-view">View Report</button></td>
+                                <td class="edit-cell"></td>
+                            </tr>
+                            <tr>
+                                <td class="empty"></td>
+                                <td>7656</td>
+                                <td>Friendship</td>
+                                <td>18/11/2025</td>
+                                <td>08:00</td>
+                                <td>Auditorium</td>
+                                <td><button class="problem-report">Report...</button></td>
+                                <td class="edit-cell"></td>
+                            </tr>
+                            <tr>
+                                <td class="empty"></td>
+                                <td>5679</td>
+                                <td>ENG301</td>
+                                <td>30/01/2025</td>
+                                <td>08:00</td>
+                                <td>ENG</td>
+                                <td><button class="problem-blocked">Report...</button></td>
+                                <td class="edit-cell"></td>
+                            </tr>
+                            <tr>
+                                <td class="empty"></td>
+                                <td>1234</td>
+                                <td>IT103</td>
+                                <td>05/11/2025</td>
+                                <td>13:00</td>
+                                <td>IT</td>
+                                <td><button class="problem-view">View Report</button></td>
+                                <td class="edit-cell"></td>
+                            </tr>
+                            <tr>
+                                <td class="empty"></td>
+                                <td>7656</td>
+                                <td>Friendship</td>
+                                <td>18/11/2025</td>
+                                <td>08:00</td>
+                                <td>Auditorium</td>
+                                <td><button class="problem-report">Report...</button></td>
+                                <td class="edit-cell"></td>
+                            </tr>
+                            <tr>
+                                <td class="empty"></td>
+                                <td>5679</td>
+                                <td>ENG301</td>
+                                <td>30/01/2025</td>
+                                <td>08:00</td>
+                                <td>ENG</td>
+                                <td><button class="problem-blocked">Report...</button></td>
+                                <td class="edit-cell"></td>
+                            </tr> -->
+                            <!-- javascript will populate body -->
+                        <!-- </tbody> -->
+                    </div>
+                    
+                </table>
+            </div>
+        </main>
+        <img src="{{ url_for('static', filename='images/bg.png') }}" id="bottom-image">
+    </div>
+    <footer>
+        <img id="psut-logo" src="{{ url_for('static', filename='images/psut_logo_white.png') }}">
+        <ul class="footer-options">
+            <li><a href="/about">About Us</a></li>
+            <li><a href="/contact">Contact</a></li>
+        </ul>
+    </footer>   
+</body>
+</html> 

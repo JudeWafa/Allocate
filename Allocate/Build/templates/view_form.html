@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservation Form</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">  
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <link rel="stylesheet" href="static/CSS/reservation_form_affairs_styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <p id="text-logo">Allocate</p>
+            <ul id="header-tabs">
+                <li id="pending-tab" class="other-tabs"><a href="/pending_affairs.html">Pending</a></li>
+                <li id="all-tab" class="other-tabs"><a href="/all_affairs.html">All</a></li>
+                <li id="schedule-tab" class="other-tabs"><a href="/schedule_affairs.html">Schedule</a></li>
+            </ul>
+        </header>
+        <main>
+            <div class="form-wrapper">
+                <h1 class="form-header">Reservation Form</h1>
+                <form action="" method="get">
+                    <div class="section">
+                        <div class="section-header">
+                            <span>Event Details</span>
+                        </div>
+                        <div class="section-content">
+                            <label for="event-title">Event Title <span class="red-star">*</span></label> <br>
+                            <input name="eventTitle" type="text" id="event-title" readonly> <br>
+                            <label>Event Type <span class="red-star">*</span></label> <br>
+                            <select name="eventType" id="event-type" disabled>
+                                <option value="conference" id="conference">Conference</option>
+                                <option value="lecture" id="lecture">Lecture</option>
+                                <option value="training" id="training">Training Course</option>
+                                <option value="meeting" id="meeting">Meeting/Gathering</option>
+                                <option value="workshop" id="workshop">Workshop</option>
+                                <option value="seminar" id="seminar">Seminar</option>
+                                <option value="agreements" id="agreements">Agreements</option>
+                                <option value="extracurricular" id="extracurricular">Extracurricular Activity</option>
+                                <option value="guestReception" id="guestReception">Guest Reception</option>
+                                <option value="fundedProjects" id="fundedProjects">Funded Projects</option>
+                                <option value="ceremony" id="ceremony">Ceremony</option>
+                                <option value="other" id="event-other">Other</option>
+                            </select>
+                            <div id="event-other-wrapper">
+                                <label for="event-other-input">Other: <span class="red-star">*</span></label>
+                                <input name="eventOtherInput" type="text" id="event-other-input" placeholder="Specify event type" readonly>
+                            </div>
+                            <label for="agenda">Agenda <span class="red-star">*</span></label> <br>
+                            <input name="agenda" type="text" id="agenda" placeholder="Link to agenda document" readonly>
+                        </div>
+                    
+                    <div class="section">
+                        <div class="section-header">
+                            <span>Location</span>
+                        </div>
+                        <div class="section-content">
+                            <label for="facility-type">Facility Type <span class="red-star">*</span></label> <br>
+                            <select name="facilityType" id="facility-type" disabled>
+                                <option value="auditorium">Auditorium</option>
+                                <option value="lab">Lab</option>
+                                <option value="room">Lecture Room</option>
+                                <option value="outdoor">Outdoor Space</option>
+                            </select> <br>
+                            <label for="capacity">Capacity <span class="red-star">*</span></label> <br>
+                            <input name="capacity" type="number" id="capacity" readonly> <br>
+                            <label for="building">Building <span class="red-star">*</span></label> <br>
+                            <select name="building" id="building" disabled>
+                                <option value="IT">King Hussein School of Computing Sciences</option>
+                                <option value="ENG">King Abdullah II School of Engineering</option>
+                                <option value="BUI">King Talal School of Business Technology</option>
+                            </select> <br>
+                            <label for="date">Date <span class="red-star">*</span></label> <br>
+                            <input name="date" type="date" id="date" readonly> <br>
+                            <label for="time">Start Time <span class="red-star">*</span></label> <br>
+                            <input name="time" type="time" id="time" readonly><br>
+                            <label for="duration">Duration <span class="red-star">*</span></label> <br>
+                            <input name="duration" type="number" id="duration" readonly> <br>
+                            <label for="facility">Facility <span class="red-star">*</span></label> <br>
+                            <select name="facility" id="facility" disabled>
+                                <!-- fill using javascript -->
+                            </select> 
+                        </div>
+                    </div>
+                    <div class="section">
+                        <div class="section-header">
+                            <span>Guests</span>
+                        </div>
+                        <div class="section-content">
+                            <div id="guest-fields"></div>
+                        </div>
+                    </div>
+                    <div class="section">
+                        <div class="section-header">
+                            <span>Funds</span>
+                        </div>
+                        <div class="section-content">
+                            <label for="funding-source">Funding Source <span class="red-star">*</span></label>
+                            <input name="fundingSource" type="text" id="funding-source" readonly>
+                            <label for="funding-amount">Funding Amount <span class="red-star">*</span></label>
+                            <input name="fundingAmount" id="funding-amount" type="number" readonly>
+                        </div>
+                    </div>
+                    <div class="section">
+                        <div class="section-header">
+                            <span>Requirements</span>
+                        </div>
+                        <div class="section-content">
+                            <br>
+                            <label class="subheader">Preparations</label>
+                            <br>
+                            <div id="preparations-checkbox" class="checkbox-grid">
+                                <div><label><input type="checkbox" name="preparations" value="flowers" id="flowers" disabled> Flowers</label></div>
+                                <div><label><input type="checkbox" name="preparations" value="backdrop" id="backdrop" disabled> Backdrop</label></div>
+                                <div><label><input type="checkbox" name="preparations" value="banner" id="banner" disabled> Banner/Rollup</label></div>
+        
+                                <div><label><input type="checkbox" name="preparations" value="printedMaterials" id="printed-materials" disabled> Printed Materials</label></div>
+                                <div><label><input type="checkbox" name="preparations" value="laptop" id="laptop" disabled> Laptop</label></div>
+                                <div class="with-input">
+                                    <label><input type="checkbox" name="preparations" value="giftBag" id="gift-bag" disabled> Gift Bags:</label>
+                                    <input type="number" step="1" min="1" id="gift-bag-input" readonly>
+                                </div>
+                            
+                                <div><label><input type="checkbox" name="preparations" value="presentation" id="presentation" disabled> Presentation</label></div>
+                                <div><label><input type="checkbox" name="preparations" value="display" id="display" disabled> Screen/Projection</label></div>
+                                <div><label><input type="checkbox" name="preparations" value="translation" id="translation" disabled> Translation</label></div>
+                            
+                                <div><label><input type="checkbox" name="preparations" value="soundEquipment" id="sound-equipment" disabled> Sound Equipment</label></div>
+                                <div><label><input type="checkbox" name="preparations" value="guidanceBoards" id="guidance-boards" disabled> Guidance Boards</label></div>
+                                <div class="with-input">
+                                    <label><input type="checkbox" name="preparations" value="badges" id="badges" disabled> Badges:</label>
+                                    <input type="number" step="1" min="1" id="badges-input" readonly>
+                                </div>
+                            
+                                <div><label><input type="checkbox" name="electricalEquipment" value="electricalEquipment" id="electrical-equipment" disabled> Electrical Equipment</label></div>
+                                <div><label><input type="checkbox" name="preparations" value="tour" id="tour" disabled> University Tour</label></div>
+                                <div><label><input type="checkbox" name="preparations" value="stationary" id="stationary" disabled> Stationary</label></div>
+                            
+                                <div><label><input type="checkbox" name="preparations" value="visualEquipment" id="visual-equipment" disabled> Visual Equipment</label></div>
+                                <div class="with-input">
+                                    <label><input type="checkbox" name="preparations" value="other" id="preparations-other" disabled> Other:</label>
+                                    <input type="text" id="preparations-other-input" readonly>
+                                </div>
+                            </div>
+
+                            <!-- Media Coverage -->
+                            <br>
+                            <label class="subheader">Media Coverage</label>
+                            <br>
+                            <div class="checkbox-grid">
+                                <label><input type="checkbox" name="media" value="photoVideo" disabled> Photo/Video</label>
+                                <label><input type="checkbox" name="media" value="press" disabled> Press Release</label>
+                                <label><input type="checkbox" name="media" value="socialMedia" disabled> Social Media</label>
+                            </div>
+
+                            <!-- Transport -->
+                            <br>
+                            <label class="subheader">Transport</label>
+                            <br>
+                            <div class="checkbox-grid">
+                                <label><input type="checkbox" name="transportation" value="emptyParking" disabled> Empty Parking Spaces</label>
+                                <label><input type="checkbox" name="transportation" value="informSecurity" disabled> Inform Security</label>
+                                <label><input type="checkbox" name="transportation" value="car" disabled> Car/Bus</label>
+                            </div>
+
+                            <!-- Hospitality -->
+                            <br>
+                            <label class="subheader">Hospitality</label>
+                            <br>
+                            <div class="checkbox-grid">
+                                <label><input type="checkbox" name="hospitality" value="breakfast" disabled> Breakfast</label>
+                                <label><input type="checkbox" name="hospitality" value="lunch" disabled> Lunch</label>
+                                <label><input type="checkbox" name="hospitality" value="dinner" disabled> Dinner</label>
+                                <label><input type="checkbox" name="hospitality" value="regular" disabled> Regular (Tea/Coffee)</label>
+                                <label><input type="checkbox" name="hospitality" value="vip" disabled> VIP</label>
+                                <label><input type="checkbox" name="hospitality" value="coffee" disabled> Coffee Break</label>
+                                <label><input type="checkbox" name="hospitality" value="juice" disabled> Juice</label>
+                                <label><input type="checkbox" name="hospitality" value="pastries" disabled> Pastries</label>
+                                <label><input type="checkbox" name="hospitality" value="biscuits" disabled> Biscuits</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="button-wrapper">
+                        <button id="back" onclick="history.back()">Back</button>
+                    </div>
+                </form>
+            </div>
+        </main>
+        <img src="static/images/bg.png" id="bottom-image">
+    </div>
+    <footer>
+        <img id="psut-logo" src="static/images/psut_logo_white.png">
+        <ul class="footer-options">
+            <li><a href="/about">About Us</a></li>
+            <li><a href="/contact">Contact</a></li>
+        </ul>
+    </footer>  
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // check if other is selected
+            const eventTypeSelect = document.getElementById('event-type');
+            const otherWrapper = document.getElementById('event-other-wrapper');
+            if (eventTypeSelect.value === 'other') {
+                otherWrapper.style.display = 'block';
+            } 
+            else {
+                otherWrapper.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,191 @@
+:root {
+    --font-family-montserrat: 'Montserrat', sans-serif;
+    --font-family-inter: 'Inter', sans-serif;
+    --font-family-roboto: 'Roboto', sans-serif;
+    --text-white: rgba(255, 255, 255, 1);
+    --blue: rgba(0, 169, 224, 1);
+    --dark-blue: rgba(0, 24, 113, 1);
+    --text-placeholder: rgba(130, 130, 130, 1);
+}
+
+html, body {
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  background-color: #F8FCFF;
+}
+
+/* * {
+    outline: 1px solid rgba(255, 0, 0, 0.2); 
+} */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    /* display: flex; */
+    /* flex-direction: column;
+    align-items: center; */
+}
+
+
+header {
+    margin: 2% 0;
+    /* outline: 1px solid red; */
+    width: 100%;
+    /* height: 200px; */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#text-logo {
+    /* outline: 1px solid red; */
+    font-size: clamp(1.5rem, 2.75vw, 3rem);  
+    /* font-size: 2.75vw; */
+    font-weight: 580;
+    font-family: var(--font-family-montserrat);
+    color: var(--blue);
+    margin-left: 3%;
+}
+
+li {
+    display: inline;
+}
+
+#header-tabs {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 3%;
+    gap: 4%;
+}
+
+#header-tabs li {
+    font-family: var(--font-family-roboto);
+    /* font-weight: 450; */
+    font-variation-settings: "wght" 475;
+    font-size: 1.1rem;
+    padding: 1.4% 2.6%;
+    align-items: center;
+}
+
+#header-tabs li a {
+    text-decoration: none;
+}
+
+.other-tabs a {
+    color: black;
+}
+
+.current-tab a {
+    font-variation-settings: "wght" 500;
+    color: var(--dark-blue);
+}
+
+#reserve-button a{
+    color: white;
+}
+
+#reserve-button {
+    background-color: var(--blue);
+    border-radius: 7px;
+}
+
+#reservations-button {
+    margin-right: 2.6%;
+}
+
+
+
+
+/* body */
+main {
+    z-index: 9999;
+}
+
+.card {
+    /* outline: 1px solid red; */
+    margin: 3% auto;
+    padding: 2.7% 4%;
+    display: flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+    align-items: center;
+    background: white;
+    font-family: var(--font-family-roboto);
+    font-size: 100%;
+    width: 40%;
+    height: 70vh;
+    border-radius: 30px;
+    box-shadow: 0px 5px 20.5px -5px rgba(0, 0, 0, 0.25);
+    text-align: justify;
+}
+
+.card p {
+    font-family: var(--font-family-roboto);
+    font-size: 1.17rem;
+    line-height: 135%;
+}
+
+.card-header {
+    width: 100%;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.3rem;
+    margin-bottom: 5%;
+}
+
+
+
+
+
+/* footer and background */
+#bottom-image {
+    position: absolute;
+    opacity: 30%;
+    width: 100%;
+    height: auto;
+    bottom: 0;
+    left: 0;
+    z-index: 0;
+    pointer-events: none;
+}
+
+footer {
+    width: 100%;
+    background-color: var(--dark-blue);
+    height: 13vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#psut-logo {
+    margin-left: 3%;
+    height: 65%;
+    pointer-events: none;
+}
+
+.footer-options {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    gap: 7%; 
+    margin-right: 4%;
+}
+
+.footer-options a {
+    text-decoration: none;
+    color: white;
+    font-family: var(--font-family-montserrat);
+    font-weight: 550;
+}

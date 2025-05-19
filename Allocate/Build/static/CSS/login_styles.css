@@ -1,0 +1,183 @@
+:root {
+    --font-family-montserrat: 'Montserrat', sans-serif;
+    --font-family-inter: 'Inter', sans-serif;
+    --text-white: rgba(255, 255, 255, 1);
+    --blue: rgba(0, 169, 224, 1);
+    --dark-blue: rgba(0, 24, 113, 1);
+    --text-placeholder: rgba(130, 130, 130, 1);
+  }
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+#text_wrapper {
+    margin: 1% 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.container {
+    /* outline: 1px solid red; */
+    position: relative;
+    background-color: #F8FCFF;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#bottom-image {
+    position: absolute;
+    opacity: 30%;
+    width: 100%;
+    height: auto;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1;
+}
+
+#slogan {
+    /* outline: 1px solid red; */
+    font-size: 2.65vw;
+    font-family: var(--font-family-inter);
+    font-weight: 600;
+    color: var(--dark-blue);
+}
+
+#text-logo {
+    /* outline: 1px solid red; */
+    font-size: 2.75vw;  
+    font-weight: 580;
+    font-family: var(--font-family-montserrat);
+    color: var(--blue);
+}
+
+.login-group {
+    /* outline: 1px solid red; */
+    position: absolute;
+    top: 16%;
+    width: 49.47%;
+    height: 75%;    
+    background-color: white;
+    border-radius: 28px;
+    box-shadow: 0px 1.4vh 2.1vh 0.4vw rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* justify-content: center; */
+    z-index: 2;
+}
+
+#psut_logo {
+    align-self: center;
+    position: relative; 
+    width: 55%;
+    /* outline: 1px solid red; */
+    display: block;
+    top: 7.6%;
+}
+
+form {
+    align-self: center;
+    /* outline: 1px solid red; */
+    margin-top: 13%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+input {
+    border: 1.5px solid #E0E0E0;
+    background-color: white;
+    width: 80%;
+    height: 10%;
+    font-family: var(--font-family-inter);
+    font-size: 105%;
+    font-weight: 400;
+    padding: 4.5% 3%;
+    margin-bottom: 2.5%;
+    border-radius: 8px;
+}
+
+input:focus {
+    border-color: var(--blue); 
+}
+  
+input::placeholder {
+    color: #828282; 
+    font-family: var(--font-family-inter);
+    font-size: 100%;
+    font-weight: 400;
+}
+
+#password_wrapper {
+    /* outline: 1px solid red; */
+    width: 80%;
+}
+
+#forgot_password {
+    display: flex;
+    justify-content: flex-end;
+    color: #828282; 
+    font-family: var(--font-family-inter);
+    font-weight: 500;
+    margin-top: 2.5%;
+}
+
+#login_button {
+    border: 0;
+    border-radius: 8px;
+    width: 80%;
+    height: 30%;
+    margin-top: 5%;
+    background-color: var(--dark-blue);
+    color: white;
+    font-family: var(--font-family-montserrat);
+    font-size: 110%;
+    font-weight: 550;
+}
+
+footer {
+    align-self: flex-end;
+    background-color: var(--dark-blue);
+    height: 13%;
+    width: 100vw;
+    display: flex;
+    /* flex-direction: row; */
+    align-items: center;
+    justify-content: center;
+}
+
+.footer-options {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 7%; 
+  }
+
+li {
+    display: inline;
+}
+
+li a {
+    text-decoration: none;
+    color: white;
+    font-family: var(--font-family-montserrat);
+    font-weight: 550;
+    
+}

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">  
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ url_for('static', filename = 'CSS/report_student_styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <p id="text-logo">Allocate</p>
+            <ul id="header-tabs">
+                <li id="home-tab" class="other-tabs"><a href="/Homepage/{{id}}">Home</a></li>
+                <li id="requests-button" class="other-tabs"><a href="/ViewRequests/{{id}}">My Requests</a></li>
+                <li id="reservations-button" class="other-tabs"><a href="/ViewReservations/{{id}}">Reservations</a></li>
+                <li id="reserve-button"><a href="/ReserveForm/{{id}}">Reserve Now</a></li>
+            </ul>
+        </header>
+        <main>   
+            <div class="card">
+                <button class="scroll-arrow" id="left-arrow" aria-label="Scroll Left" onclick="history.back()">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#001871" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="15 18 9 12 15 6" />
+                    </svg>
+                </button>
+                <h1 class="card-header">Report a Technical Issue</h1>
+                <div class="form-wrapper">
+                    <form method="post" action="">
+                        <label for="facility">Facility</label>
+                        <input name="facility" type="text" id="facility" value="{{facility}}" readonly>
+                        <label for="equipment">Equipment with issue/s <span class="red-star">*</span></label>
+                        <select id="equipment" name="equipment">
+                            {% if equipment is not none %}
+                                {% for e in equipments %}
+                                    <option value="{{e.name}}">{{e}}</option>
+                                {% endfor %}
+                            {% else %}
+                                <option value="No equipment found.">No equipment found.</option>
+                            {% endif %}
+                        </select>
+
+                        <label for="description">Description of issue per equipment <span class="red-star">*</span></label>
+                        <textarea name="description" id="description" maxlength="1500" rows="6" required placeholder="Write a detailed description of the issues you faced per equipment within 1500 characters."></textarea>
+                        <div class="button-wrapper">
+                            <button type="reset" id="clear-button">Clear</button>
+                            <button type="submit" id="submit-button">Submit</button>
+                        </div>
+                        
+                    </form>
+                </div>
+            </div>
+            
+        </main>
+        <img src="{{ url_for('static', filename = 'images/bg.png') }}" id="bottom-image">
+    </div>
+    <footer>
+        <img id="psut-logo" src="{{ url_for('static', filename = 'images/psut_logo_white.png') }}">
+        <ul class="footer-options">
+            <li><a href="/about">About Us</a></li>
+            <li><a href="/contact">Contact</a></li>
+        </ul>
+    </footer>   
+</body>
+</html> 

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservation Form</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">  
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/approval_followup_affairs_styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <p id="text-logo">Allocate</p>
+            <ul id="header-tabs">
+                <li id="pending-tab" class="other-tabs"><a href="/pending_affairs.html">Pending</a></li>
+                <li id="all-tab" class="other-tabs"><a href="/all_affairs.html">All</a></li>
+                <li id="schedule-tab" class="other-tabs"><a href="/schedule_affairs.html">Schedule</a></li>
+            </ul>
+        </header>
+        <main>
+            <div class="form-wrapper">
+                <h1 class="form-header">Reservation Form</h1>
+                <form action="" method="post">
+                    <div class="section">
+                        <div class="section-header">
+                            <span>Assign Student Affairs</span>
+                        </div>
+                        <div class="section-content">
+                            <label for="assign-to">Assign to</label>
+                            <select name="assigned-affair" id="assigned-affair">
+                                {% for a in affairs %}
+                                    <option value="{{a}}">{{a}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="button-wrapper">
+                            <button id="no-button"><a href="/ViewAllRequests">No</a></button>
+                            <input type="submit" id="yes-button" value="Yes">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </main>
+        <img src="{{ url_for('static', filename='images/bg.png') }}" id="bottom-image">
+    </div>
+    <footer>
+        <img id="psut-logo" src="{{ url_for('static', filename='images/psut_logo_white.png') }}">
+        <ul class="footer-options">
+            <li><a href="/about">About Us</a></li>
+            <li><a href="/contact">Contact</a></li>
+        </ul>
+    </footer>  
+    
+    <script>
+        
+    </script>
+</body>
+</html> 

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Club</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">  
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <link rel="stylesheet" href="static/CSS/add_user_admin_styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <p id="text-logo">Allocate</p>
+            <ul id="header-tabs">
+                <li id="add-user-tab" class="other-tabs"><a href="/add_user_admin.html">Add User</a></li>
+                <li id="add-club-tab" class="current-tab"><a href="/add_club_admin.html">Add CLub</a></li>
+            </ul>
+        </header>
+        <main>
+            <div class="side-wrapper">
+                <div class="side-header">
+                    <h1>Add a Club</h1>
+                </div>
+                <div clas="more-text">
+                    <p class="required-text"><span class="red-star">*</span> Required Field</p>
+                    <p class="request-info">Add a club to the system</p>
+                </div>
+            </div>
+            <div class="form-wrapper">
+                <h1 class="form-header">Add Club Form</h1>
+                <form action="" method="post">
+                    <div class="section" id="user-details">
+                        <div class="section-header">
+                            <span>Club Details</span>
+                        </div>
+                        <div class="section-content">
+                            <label for="club-name">Club Name <span class="red-star">*</span></label>
+                            <input type="text" id="club-name" name="clubName" placeholder="Club Name" required autocomplete="off">
+                            <label for="supervisor">Supervisor University Id <span class="red-star">*</span></label>
+                            <input type="text" id="supervisor" name="supervisor" placeholder="Supervisor University Id" required autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="button-wrapper">
+                        <input type="reset">
+                        <input type="submit">
+                    </div>
+                </form>
+                <div id="message-box">
+                    <span></span>
+                </div>
+            </div>
+        </main>
+        <img src="static/images/bg.png" id="bottom-image">
+    </div>
+    <footer>
+        <img id="psut-logo" src="static/images/psut_logo_white.png">
+        <ul class="footer-options">
+            <li><a href="/about">About Us</a></li>
+            <li><a href="/contact">Contact</a></li>
+        </ul>
+    </footer>   
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.querySelector("form");
+            const messageBox = document.querySelector("#message-box span");
+            const clubNameInput = document.getElementById("club-name");
+            const supervisorInput = document.getElementById("supervisor");
+        
+            form.addEventListener("submit", function (e) {
+                e.preventDefault();
+                let errors = [];
+        
+                const clubName = clubNameInput.value.trim();
+                const supervisorId = supervisorInput.value.trim();
+        
+                // Validate fields are not empty
+                if (!clubName || !supervisorId) {
+                    errors.push("Make sure no field is left empty.");
+                }
+        
+                // Validate supervisor ID is numeric
+                const idRegex = /^[0-9]+$/;
+                if (supervisorId && !idRegex.test(supervisorId)) {
+                    errors.push("Supervisor University ID must be numeric only.");
+                }
+        
+                if (errors.length > 0) {
+                    messageBox.style.color = "red";
+                    messageBox.innerHTML = errors.map(err => `${err}<br>`).join("");
+                    const sideWrapper = document.querySelector(".side-wrapper");
+                    sideWrapper.innerHTML = `
+                        <div class="side-header">
+                            <h1>Failed to add club</h1>
+                        </div>
+                    `;
+                } else {
+                    messageBox.style.color = "green";
+                    messageBox.textContent = "Club successfully validated and submitted!";
+        
+                    // Update side-wrapper content
+                    const sideWrapper = document.querySelector(".side-wrapper");
+                    sideWrapper.innerHTML = `
+                        <div class="side-header">
+                            <h1>Club added successfully!</h1>
+                        </div>
+                    `;
+                    form.submit();
+                }
+            });
+        });
+    </script>
+        
+
+</body>
+</html> 

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Report</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">  
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <link rel="stylesheet" href="report_technician_styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <p id="text-logo">Allocate</p>
+            <ul id="header-tabs">
+                <li id="pending-tab" class="current-tab"><a href="/pending_technician.html">Pending</a></li>
+                <li id="all-tab" class="other-tabs"><a href="/all_technician.html">All</a></li>
+            </ul>
+        </header>
+        <main>   
+            <div class="card">
+                <h1 class="card-header">Technical Issue Report</h1>
+                <div class="form-wrapper">
+                    <form method="post" action="">
+                        <label for="facility">Facility</label>
+                        <input type="text" id="facility" value="IT103" readonly>
+                        <label for="equipment">Equipment with issue/s <span class="red-star">*</span></label>
+                        <input type="text" id="equipment" placeholder="Equipment separated by commas" readonly>
+                        <label for="description">Description of issue per equipment <span class="red-star">*</span></label>
+                        <textarea id="description" maxlength="1500" rows="20" readonly></textarea>
+                        <label for="comments">Add any description or comments</label>
+                        <textarea id="comments" maxlength="1500" rows="20"></textarea>
+                        <div class="button-wrapper">
+                            <button id="save-button" onclick="saveReport()">Save</button>
+                            <button id="resolve-button" onclick="resolveReport()">Resolve</button>
+                        </div>
+                        
+                    </form>
+                </div>
+            </div>
+        </main>
+        <img src="images/bg.png" id="bottom-image">
+    </div>
+    <footer>
+        <img id="psut-logo" src="/images/psut_logo_white.png">
+        <ul class="footer-options">
+            <li><a href="/about">About Us</a></li>
+            <li><a href="/contact">Contact</a></li>
+        </ul>
+    </footer>   
+</body>
+</html> 

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='CSS/home_student_styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <p id="text-logo">Allocate</p>
+            <ul id="header-tabs">
+                <li id="home-tab" class="current-tab"><a href="/Homepage/{{id}}">Home</a></li>
+                <li id="requests-button" class="other-tabs"><a href="/ViewRequests/{{id}}">My Requests</a></li>
+                <li id="reservations-button" class="other-tabs">{% if id %}<a href="/ViewReservations/{{id}}">{% endif %}Reservations</a></li>
+                <li id="reserve-button"><a href="/ReserveForm/{{id}}">Reserve Now</a></li>
+            </ul>
+        </header>
+        <div id="content">
+            <div id="text-wrapper">
+                <h1 id="hello-name">Hello 
+                    {% if name %}
+                        <span>{{ name }}</span>
+                    {% endif %}
+                </h1>
+                <h3 id="text">What would you like to do today?</h3>
+            </div>      
+            <div class="card-carousel-wrapper">
+                <button class="scroll-arrow" id="left-arrow" style="display: none;" aria-label="Scroll Left">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#001871" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="15 18 9 12 15 6" />
+                    </svg>
+                </button>
+                <div class="card-carousel" id="card-carousel">
+                    <div class="card">
+                        <p class="card-header">Reserve a <span class="card-title">Lecture Room</span></p>
+                        <p class="card-subtitle">See all available rooms at a certain time at a press of a button</p>
+                        <div class="time-wrapper">
+                            <input type="date" id="room-date-select" class="date-selector">
+                            <span class="at-symbol">:</span>
+                            <select id="room-start-time-select" name="room-start-time" class="time-selector"></select>
+                            <span class="to-symbol">—</span>
+                            <select id="room-end-time-select" name="room-end-time" class="time-selector"></select>
+                            
+                        </div> 
+                        <button id="room-check-button" class="check-button">Check</button>
+                    </div>
+                    <div class="card">
+                        <p class="card-header">Reserve an <span class="card-title">Auditorium</span></p>
+                        <p class="card-subtitle">See all available auditoriums at a certain time at a press of a button</p>
+                        <div class="time-wrapper">
+                            <input type="date" id="auditorium-date-select" class="date-selector">
+                            <span class="at-symbol">:</span>
+                            <select id="auditorium-start-time-select" name="auditorium-start-time" class="time-selector"></select>
+                            <span class="to-symbol">—</span>
+                            <select id="auditorium-end-time-select" name="auditorium-end-time" class="time-selector"></select>
+                        </div>
+                        <button id="auditorium-check-button" class="check-button">Check</button>
+                    </div>
+                    <div class="card">
+                        <p class="card-header">Reserve a <span class="card-title">Lab</span></p>
+                        <p class="card-subtitle">See all available labs at a certain time at a press of a button</p>
+                        <div class="time-wrapper">
+                            <input type="date" id="lab-date-select" class="date-selector">
+                            <span class="at-symbol">:</span>
+                            <select id="lab-start-time-select" name="lab-start-time" class="time-selector"></select>
+                            <span class="to-symbol">—</span>
+                            <select id="lab-end-time-select" name="lab-end-time" class="time-selector"></select>
+                        </div>
+                        <button id="lab-check-button" class="check-button">Check</button>
+                    </div>
+                    <div class="card">
+                        <p class="card-header">Reserve an <span class="card-title">Outdoor Space</span></p> 
+                        <p class="card-subtitle">See all available outdoor spaces at a certain time at a press of a button</p>
+                        <div class="time-wrapper">
+                            <input type="date" id="outdoor-date-select" class="date-selector">
+                            <span class="at-symbol">:</span>
+                            <select id="outdoor-start-time-select" name="outdoor-start-time" class="time-selector"></select>
+                            <span class="to-symbol">—</span>
+                            <select id="outdoor-end-time-select" name="outdoor-end-time" class="time-selector"></select>
+                        </div> 
+                        <button id="outdoor-check-button" class="check-button">Check</button>
+                    </div>  
+                </div>
+                <button class="scroll-arrow"  id="right-arrow" aria-label="Scroll Right">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#001871" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="9 18 15 12 9 6" />
+                    </svg>
+                </button>
+            </div>   
+            <div class="followup-card-wrapper">
+                <div id="updates-card" class="followup-card">
+                    <p class="followup-card-header">Request Updates</p>
+                    <div id="updates-content" class="followup-card-content">
+                        <div class="followup-text" id="updates-text">
+                            <p id="facility-update">Facility: {% if req %}{{req.facility}}{% endif %}</p>
+                            <p id="time-update">Time: {% if req %}{{req.time}}{% endif %}</p>
+                            <span id="status-update">{% if req %}{{req.status}}{% endif %}</span>
+                        </div>
+                        <button id="updates-button" class="followup-button"><a href="/ViewRequests/{{id}}">See all...</a></button>
+                    </div>
+                </div>
+                <div id="report-card" class="followup-card">
+                    <p class="followup-card-header">Report a Problem</p>
+                    <div id="updates-content" class="followup-card-content">
+                        <div class="followup-text" id="report-text">
+                            <p>Report any technical problem you faced during your reservation</p>
+                        </div>
+                        <button id="report-button" class="followup-button"><a href="/ViewReservations/{{id}}">Report</a></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <img src="{{ url_for('static', filename='images/bg.png') }}" id="bottom-image">
+    </div>
+    <footer>
+        <img id="psut-logo" src="{{ url_for('static', filename='images/psut_logo_white.png') }}">
+        <ul class="footer-options">
+            <li><a href="/about">About Us</a></li>
+            <li><a href="/contact">Contact</a></li>
+        </ul>
+    </footer>
+
+    <script>
+        const carousel = document.getElementById('card-carousel');
+        const rightArrow = document.getElementById('right-arrow');
+        const leftArrow = document.getElementById('left-arrow');
+        const scrollAmount = carousel.offsetWidth;
+    
+        rightArrow.addEventListener('click', () => {
+            carousel.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+        });
+    
+        leftArrow.addEventListener('click', () => {
+            carousel.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+        });
+    
+        carousel.addEventListener('scroll', () => {
+            const maxScrollLeft = carousel.scrollWidth - carousel.clientWidth;
+    
+            if (carousel.scrollLeft >= maxScrollLeft - 5) {
+                rightArrow.style.display = 'none';
+                leftArrow.style.display = 'flex';
+            } else if (carousel.scrollLeft <= 5) {
+                leftArrow.style.display = 'none';
+                rightArrow.style.display = 'flex';
+            } else {
+                // if wants to postitoon in the middle
+                leftArrow.style.display = 'flex';
+                rightArrow.style.display = 'flex';
+            }
+        });
+        
+        // time selector
+        const timePairs = [
+            { startId: 'room-start-time-select', endId: 'room-end-time-select' },
+            { startId: 'auditorium-start-time-select', endId: 'auditorium-end-time-select' },
+            { startId: 'lab-start-time-select', endId: 'lab-end-time-select' },
+            { startId: 'outdoor-start-time-select', endId: 'outdoor-end-time-select' }
+        ];
+    
+        function populateStartTimes(selectElement) {
+            selectElement.innerHTML = '';
+            for (let hour = 8; hour <= 19; hour++) {
+                const timeString = hour.toString().padStart(2, '0') + ':00'; // 01:00 12:00
+                selectElement.add(new Option(timeString, timeString));
+            }
+        }
+    
+        function populateEndTimes(selectElement, selectedStartHour) {
+            selectElement.innerHTML = '';
+            for (let hour = selectedStartHour + 1; hour <= 20; hour++) {
+                const timeString = hour.toString().padStart(2, '0') + ':00';
+                selectElement.add(new Option(timeString, timeString));
+            }
+        }
+    
+        timePairs.forEach(pair => {
+            const startSelect = document.getElementById(pair.startId);
+            const endSelect = document.getElementById(pair.endId);
+    
+            populateStartTimes(startSelect);
+            const defaultStartHour = 8;
+            populateEndTimes(endSelect, defaultStartHour);
+    
+            startSelect.addEventListener('change', () => {
+                const selectedHour = parseInt(startSelect.value.split(':')[0], 10);
+                populateEndTimes(endSelect, selectedHour);
+            });
+        });
+    
+        // disable past dates
+        const today = new Date().toISOString().split("T")[0];
+        document.querySelectorAll('input[type="date"]').forEach(input => {
+            input.setAttribute("min", today);
+        });
+    </script>
+    
+    
+</body>
+</html>
