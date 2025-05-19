@@ -15,8 +15,8 @@
         <header>
             <p id="text-logo">Allocate</p>
             <ul id="header-tabs">
-                <li id="pending-tab" class="current-tab"><a href="/pending_technician.html">Pending</a></li>
-                <li id="all-tab" class="other-tabs"><a href="/all_technician.html">All</a></li>
+                <li id="pending-tab" class="current-tab"><a href="/ViewPendingReports">Pending</a></li>
+                <li id="all-tab" class="other-tabs"><a href="/ViewAllReports">All</a></li>
             </ul>
         </header>
         <main>
@@ -75,11 +75,13 @@
                                     <td></td>
                                     <td><button class="resolve-button">Resolve</button></td>
                                     <td>
-                                        <span class="more-arrow">
-                                            <svg  viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M10 7L15 12L10 17"  stroke-linecap="round"/>
-                                            </svg>
-                                        </span>
+                                        <a href="/ViewReportTechnician/{{rep.reportId}}">
+                                            <span class="more-arrow">
+                                                <svg  viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M10 7L15 12L10 17"  stroke-linecap="round"/>
+                                                </svg>
+                                            </span>
+                                        </a>
                                     </td>
                                     <td class="edit-cell"></td>
                                 </tr>
@@ -292,8 +294,8 @@
     <footer>
         <img id="psut-logo" src="static/images/psut_logo_white.png">
         <ul class="footer-options">
-            <li><a href="/about">About Us</a></li>
-            <li><a href="/contact">Contact</a></li>
+            <li><a href="/AboutUsTechnician">About Us</a></li>
+            <li><a href="/ContactUsTechnician">Contact</a></li>
         </ul>
     </footer>   
 </body>

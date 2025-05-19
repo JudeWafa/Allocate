@@ -18,7 +18,7 @@
                 <li id="home-tab" class="other-tabs"><a href="/Homepage/{{id}}">Home</a></li>
                 <li id="requests-button" class="other-tabs"><a href="/ViewRequests/{{id}}">My Requests</a></li>
                 <li id="reservations-button" class="other-tabs"><a href="/ViewReservations/{{id}}">Reservations</a></li>
-                <li id="reserve-button"><a href="/ReserveForm/{{id}}">Reserve Now</a></li>
+                <li id="reserve-button"><a href="/ReserveSchedule/{{id}}">Reserve Now</a></li>
             </ul>
         </header>
         <main>
@@ -88,9 +88,17 @@
                             <label for="date">Date <span class="red-star">*</span></label> <br>
                             <input name="date" type="date" id="date"> <br>
                             <label for="start_time">Start Time <span class="red-star">*</span></label> <br>
-                            <input name="start_time" type="time" id="start_time" ><br>
+                            {% if start %}
+                                <input name="start_time" type="time" id="start_time" value="{{start}}"><br>
+                            {% else %}
+                                <input name="start_time" type="time" id="start_time" ><br>
+                            {% endif %}
                             <label for="end_time">End Time <span class="red-star">*</span></label> <br>
-                            <input name="end_time" type="time" id="end_time" ><br>
+                            {% if end %}
+                                <input name="end_time" type="time" id="end_time" value="{{end}}"><br>
+                            {% else %}
+                                <input name="end_time" type="time" id="end_time" ><br>
+                            {% endif %}
                             <label for="facility">Facilities <span class="red-star">*</span></label> <br> 
                             <select name="facility" id="facility" required>
                                 <script>
@@ -134,6 +142,9 @@
                                                 } else {
                                                     data.forEach(facility => {
                                                         const item = document.createElement('option');
+                                                        // if (facility == {{facility}}){
+                                                        //     item.selected = true;
+                                                        // }
                                                         item.text = facility.name;
                                                         list.appendChild(item);
                                                     });
@@ -262,8 +273,8 @@
     <footer>
         <img id="psut-logo" src="{{ url_for('static', filename = 'images/psut_logo_white.png') }}">
         <ul class="footer-options">
-            <li><a href="/about">About Us</a></li>
-            <li><a href="/contact">Contact</a></li>
+            <li><a href="/AboutUsAcademic">About Us</a></li>
+            <li><a href="/ContactUsAcademic">Contact</a></li>
         </ul>
     </footer>   
 

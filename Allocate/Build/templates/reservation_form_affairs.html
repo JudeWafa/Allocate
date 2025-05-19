@@ -15,9 +15,9 @@
         <header>
             <p id="text-logo">Allocate</p>
             <ul id="header-tabs">
-                <li id="pending-tab" class="other-tabs"><a href="/pending_affairs.html">Pending</a></li>
-                <li id="all-tab" class="other-tabs"><a href="/all_affairs.html">All</a></li>
-                <li id="schedule-tab" class="other-tabs"><a href="/schedule_affairs.html">Schedule</a></li>
+                <li id="pending-tab" class="other-tabs"><a href="/ViewPendingRequests">Pending</a></li>
+                <li id="all-tab" class="other-tabs"><a href="/ViewAllRequests">All</a></li>
+                <!-- <li id="schedule-tab" class="other-tabs"><a href="/schedule_affairs.html">Schedule</a></li> -->
             </ul>
         </header>
         <main>
@@ -70,12 +70,16 @@
                         </div>
                         <div class="section-content">
                             <div id="guest-fields">
-                                {% for g in guests %}
-                                    <div class="guest-row">
-                                        <input type="text" class="guest-name" value="{{g.guestName}}" readonly>
-                                        <input type="text" class="cv-input" value="{{g.guestCV}}" readonly>
-                                    </div>
-                                {% endfor %}
+                                {% if guests %}
+                                    {% for g in guests %}
+                                        <div class="guest-row">
+                                            <input type="text" class="guest-name" value="{{g.guestName}}" readonly>
+                                            <input type="text" class="cv-input" value="{{g.guestCV}}" readonly>
+                                        </div>
+                                    {% endfor %}
+                                {% else %}
+                                    <input type="text" value="None" readonly>
+                                {% endif %}
                             </div>
                             
                         </div>
@@ -86,9 +90,18 @@
                         </div>
                         <div class="section-content">
                             <label for="funding-source">Funding Source </label>
-                            <input name="fundingSource" type="text" id="funding-source" value="{{res.fundingSource}}" readonly>
+                            {% if res.fundingSource %}
+                                <input name="fundingSource" type="text" id="funding-source" value="{{res.fundingSource}}" readonly>
+                            {% else %}
+                                <input name="fundingSource" type="text" id="funding-source" value="None" readonly>
+                            {% endif %}
                             <label for="funding-amount">Funding Amount </label>
-                            <input name="fundingAmount" id="funding-amount" type="number" value="{{res.fundingAmount}}" readonly>
+                            {% if res.fundingAmount%}
+                                <input name="fundingAmount" id="funding-amount" type="number" value="{{res.fundingAmount}}" readonly>
+                            {% else %}
+                                <input name="fundingAmount" id="funding-amount" type="number" value="0" readonly>
+                            {% endif %}
+                                
                         </div>
                     </div>
                     <div class="section">
@@ -193,9 +206,14 @@
                     </div>
                     <div class="button-wrapper">
                         <button id="back" onclick="history.back()">Back</button>
-                        <button id="rejectRequest" class="blocked" onclick="rejectRequest()">Reject</button>
-                        <button id="approveRequest" ><a href="/approveRequest/{{res.reservationId}}">Approve</a></button>
-                    </div>
+                        {% if res.status == 0 %}
+                            <button id="rejectRequest"><a href="/ViewPendingRequests">Reject</a></button>
+                            <button id="approveRequest" ><a href="/approveRequest/{{res.reservationId}}">Approve</a></button>
+                        {% else %}
+                            <button id="rejectRequest" class="blocked" disabled>Reject</button>
+                            <button id="approveRequest" class="blocked" disabled>Approve</button>
+                        {% endif %}
+                        </div>
                 </form>
             </div>
         </main>
@@ -204,8 +222,8 @@
     <footer>
         <img id="psut-logo" src="{{ url_for('static', filename = 'images/psut_logo_white.png') }}">
         <ul class="footer-options">
-            <li><a href="/about">About Us</a></li>
-            <li><a href="/contact">Contact</a></li>
+            <li><a href="/AboutUsAffairs">About Us</a></li>
+            <li><a href="/ContactUsAffairs">Contact</a></li>
         </ul>
     </footer>  
     

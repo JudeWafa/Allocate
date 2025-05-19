@@ -17,7 +17,7 @@
                 <li id="home-tab" class="current-tab"><a href="/Homepage/{{id}}">Home</a></li>
                 <li id="requests-button" class="other-tabs"><a href="/ViewRequests/{{id}}">My Requests</a></li>
                 <li id="reservations-button" class="other-tabs">{% if id %}<a href="/ViewReservations/{{id}}">{% endif %}Reservations</a></li>
-                <li id="reserve-button"><a href="/ReserveForm/{{id}}">Reserve Now</a></li>
+                <li id="reserve-button"><a href="/ReserveSchedule/{{id}}">Reserve Now</a></li>
             </ul>
         </header>
         <div id="content">
@@ -120,8 +120,8 @@
     <footer>
         <img id="psut-logo" src="{{ url_for('static', filename='images/psut_logo_white.png') }}">
         <ul class="footer-options">
-            <li><a href="/about">About Us</a></li>
-            <li><a href="/contact">Contact</a></li>
+            <li><a href="/AboutUsAcademic">About Us</a></li>
+            <li><a href="/ContactUsAcademic">Contact</a></li>
         </ul>
     </footer>
 

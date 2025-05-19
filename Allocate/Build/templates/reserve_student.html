@@ -8,17 +8,17 @@
     <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">  
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
-    <link rel="stylesheet" href="static/CSS/reserve_student_styles.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename = 'CSS/reserve_student_styles.css') }}">
 </head>
 <body>
     <div class="container">
         <header>
             <p id="text-logo">Allocate</p>
             <ul id="header-tabs">
-                <li id="home-tab" class="other-tabs"><a href="/home_student.html">Home</a></li>
-                <li id="requests-button" class="other-tabs"><a href="/requests_student.html">My Requests</a></li>
-                <li id="reservations-button" class="other-tabs"><a href="/reservations_student.html">Reservations</a></li>
-                <li id="reserve-button" class="current-tab"><a href="/reserve_student.html">Reserve Now</a></li>
+                <li id="home-tab" class="other-tabs"><a href="/Homepage/{{id}}">Home</a></li>
+                <li id="requests-button" class="other-tabs"><a href="/ViewRequests/{{id}}">My Requests</a></li>
+                <li id="reservations-button" class="other-tabs"><a href="/ViewReservations/{{id}}">Reservations</a></li>
+                <li id="reserve-button"><a href="/ReserveSchedule/{{id}}">Reserve Now</a></li>
             </ul>
         </header>
         <main>  
@@ -50,9 +50,9 @@
                 <div id="modal" class="modal hidden">
                     <div class="modal-content">
                         <h3>Confirm Reservation</h3>
-                        <form method="post" action=""></form>
+                        <form method="post" action="">
                         <!-- <p>Facility: </p> -->
-                            <input type="text" id="modal-facility" name="facility" readonly/>
+                            <input type="text" id="modal-facility" value="modal-facility" name="facility" readonly/>
                         <!-- <p id="modal-facility"></p> -->
                             <label>Start Time: <input type="time" id="start-time" name="start"/></label>
                             <label>End Time: <input type="time" id="end-time" name="end"/></label>
@@ -69,10 +69,10 @@
         </main>
     </div>
     <footer>
-        <img id="psut-logo" src="static/images/psut_logo_white.png">
+        <img id="psut-logo" src="{{ url_for('static', filename = 'images/psut_logo_white.png') }}">
         <ul class="footer-options">
-            <li><a href="/about">About Us</a></li>
-            <li><a href="/contact">Contact</a></li>
+            <li><a href="/AboutUsAcademic">About Us</a></li>
+            <li><a href="/ContactUsAcademic">Contact</a></li>
         </ul>
     </footer> 
 
@@ -275,7 +275,8 @@
                 }
 
                 const params = new URLSearchParams({ facility, start, end, date: dateKey });
-                window.location.href = `/reserve-form?${params.toString()}`;
+                // window.location.href = `/reserve-form?${params.toString()}`;
+                fetch("/ReserveSchedule/{{id}}", {method: "POST"})
             };
 
             document.getElementById('cancel-btn').onclick = () => {

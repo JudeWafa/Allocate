@@ -338,8 +338,28 @@ def viewReport(reportId, id):
 
     return render_template("view_report_student.html", facility = facilityName, equipment = equipmentName, description = report.reportInfo, id = id)
 
+
+@app.route("/ReserveSchedule/<int:id>", methods=["GET", "POST"])
+def reserveSchedule(id):
+    # print("meow")
+    if request.method == "POST":
+        print("hola")
+        start = request.form["start"]
+        end = request.form["end"]
+        facility = request.form["facility"]
+        return redirect(url_for("reserveForm", id=id, start=start, end=end, facility=facility))
+    return render_template("reserve_student.html", id=id)
+
+
 @app.route("/ReserveForm/<int:id>", methods = ["POST", "GET"])
 def reserveForm(id):
+
+    if request.method == "GET":
+        start = request.args.get("start")
+        end = request.args.get("end")
+        facility = request.args.get("facility")
+
+        return render_template("reservation_form.html", id=id, start=start, end=end, facility=facility)
 
     if request.method == "POST":
         title = request.form["eventTitle"]
@@ -574,15 +594,6 @@ def viewRequests(id):
     return render_template("requests_student.html", id=id, requests=result)
 
 
-@app.route("/ReserveSchedule", methods=["GET", "POST"])
-def reserveSchedule():
-    if request.method == "POST":
-        start = request.form["start"]
-        end = request.form["end"]
-        facility = request.form["facility"]
-        print(facility)
-    return render_template("reserve_student.html")
-
 
 
 
@@ -719,6 +730,7 @@ def viewAllReports():
     result = []
     for r in reports:
         result.append({
+            "reportId": r.reportId,
             "name": session.query(Users.userName).filter_by(userId=r.issuedBy).first()[0],
             "facility": session.query(Facility.facilityName).filter_by(facilityId = r.facilityId).first()[0],
             "description": r.reportInfo,
@@ -728,7 +740,7 @@ def viewAllReports():
     return render_template("all_technician.html", reports=result)
 
 
-@app.route("/ViewPendingReports/")
+@app.route("/ViewPendingReports")
 def viewPendingReports():
     reports = session.query(Reports).order_by(desc(Reports.reportId)).all()
 
@@ -736,6 +748,7 @@ def viewPendingReports():
     for r in reports:
         if r.status == 0:
             result.append({
+                "reportId": r.reportId,
                 "name": session.query(Users.userName).filter_by(userId=r.issuedBy).first()[0],
                 "facility": session.query(Facility.facilityName).filter_by(facilityId = r.facilityId).first()[0],
                 "description": r.reportInfo,
@@ -849,13 +862,67 @@ def AddClub():
 
     return render_template("add_club_admin.html")
 
-@app.route("/AboutUs")
-def AboutUs():
+@app.route("/AboutUsAdmin")
+def AboutUsAdmin():
     return render_template("about_us_admin.html")
+
+@app.route("/AboutUsAcademic")
+def AboutUsAcademic():
+    return render_template("about_us_academics.html")
+
+@app.route("/AboutUsAffairs")
+def AboutUsAffairs():
+    return render_template("about_us_affairs.html")
+
+@app.route("/AboutUsRegistration")
+def AboutUsRegistration():
+    return render_template("about_us_registration.html")
+
+@app.route("/AboutUsTechnician")
+def AboutUsTechnician():
+    return render_template("about_us_technician.html")
+
+@app.route("/ContactUsAdmin")
+def ContactUsAdmin():
+    return render_template("contact_us_admin.html")
+
+@app.route("/ContactUsAcademic")
+def ContactUsAcademic():
+    return render_template("contact_us_academics.html")
+
+@app.route("/ContactUsAffairs")
+def ContactUsAffairs():
+    return render_template("contact_us_affairs.html")
+
+@app.route("/ContactUsRegistration")
+def ContactUsRegistration():
+    return render_template("contact_us_registration.html")
+
+@app.route("/ContactUsTechnician")
+def ContactUsTechnician():
+    return render_template("contact_us_technician.html")
+
+@app.route("/ViewReportTechnician/<int:reportId>", methods=["POST", "GET"])
+def viewReportTechnician(reportId):
+    report = session.query(Reports).filter_by(reportId = reportId).first()
+    if request.method == "GET":
+        facilityName = session.query(Facility.facilityName).filter_by(facilityId = report.facilityId).first()[0]
+        equipmentName = session.query(Equipment.name).filter_by(equipmentId = report.equipmentId).first()[0]
+    
+        return render_template("report_technician.html", facility = facilityName, equipment = equipmentName, description = report.reportInfo, id = id)
+    
+    if request.method == "POST":
+        comment = request.form["comment"]
+        report.technicianComment = comment
+        session.commit()
+        return redirect("/ViewPendingReports")
+    
+    return render_template("report_technician.html")
+
 
 @app.route("/test")
 def test():
-    return render_template("view_form.html")
+    return render_template("report_technician.html")
 
 
 

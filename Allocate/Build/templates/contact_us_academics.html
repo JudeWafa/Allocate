@@ -8,17 +8,17 @@
     <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">  
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
-    <link rel="stylesheet" href="contact_us_styles.css">
+    <link rel="stylesheet" href="static/CSS/contact_us_styles.css">
 </head>
 <body>
     <div class="container">
         <header>
             <p id="text-logo">Allocate</p>
             <ul id="header-tabs">
-                <li id="home-tab" class="other-tabs"><a href="/home_student.html">Home</a></li>
-                <li id="requests-button" class="other-tabs"><a href="/requests_student.html">My Requests</a></li>
-                <li id="reservations-button" class="other-tabs"><a href="/reservations_student.html">Reservations</a></li>
-                <li id="reserve-button"><a href="/reserve_student.html">Reserve Now</a></li>
+                <li id="home-tab" class="other-tabs"><a href="/Homepage/{{id}}">Home</a></li>
+                <li id="requests-button" class="other-tabs"><a href="/ViewRequests/{{id}}">My Requests</a></li>
+                <li id="reservations-button" class="other-tabs"><a href="/ViewReservations/{{id}}">Reservations</a></li>
+                <li id="reserve-button"><a href="/ReserveForm/{{id}}">Reserve Now</a></li>
             </ul>
         </header>
         <main>
@@ -33,7 +33,7 @@
                         <p class="card-subtitle">00962799042366</p>
                     </div>
                     <div class="card">
-                        <p class="card-header">Jude Wafa</p>
+                        <p class="card-header">Jood Wafa</p>
                         <p class="card-subtitle">joo20210042@std.psut.edu.jo</p>
                         <p class="card-subtitle">00962791787097</p>
                     </div>
@@ -61,13 +61,13 @@
                 </div>
             </div>
         </main>
-        <img src="images/bg.png" id="bottom-image">
+        <img src="static/images/bg.png" id="bottom-image">
     </div>
     <footer>
-        <img id="psut-logo" src="/images/psut_logo_white.png">
+        <img id="psut-logo" src="static/images/psut_logo_white.png">
         <ul class="footer-options">
-            <li><a href="/about">About Us</a></li>
-            <li><a href="/contact">Contact</a></li>
+            <li><a href="/AboutUsAcademic">About Us</a></li>
+            <li><a href="/ContactUsAcademic">Contact</a></li>
         </ul>
     </footer>  
 </body>
