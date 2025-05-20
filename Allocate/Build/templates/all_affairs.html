@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">  
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />  
     <link rel="stylesheet" href="static/CSS/pending_affairs_styles.css">
 </head>
 <body>
@@ -17,6 +17,11 @@
             <ul id="header-tabs">
                 <li id="pending-tab" class="other-tabs"><a href="/ViewPendingRequests">Pending</a></li>
                 <li id="all-tab" class="current-tab"><a href="/ViewAllRequests">All</a></li>
+                <li id="logout-tab">
+                    <button onclick="window.location.href='/logIn'" id="logout-button">
+                        <span id="logout" class="material-symbols-outlined">logout</span>
+                    </button>
+                </li>
             </ul>
         </header>
         <main>
@@ -32,40 +37,9 @@
                                 <input type="search" id="search" placeholder="Search" autocomplete="off">
                             </td>
                             <td>
-                                <label for="sort">Sort: </label>
-                                <select name="sort" id="sort">
-                                    <option value="ascendingTime">Oldest First</option>
-                                    <option value="descendingTime">Newest First</option>
-                                    <option value="ascendingTitle">Ascending by Purpose</option>
-                                    <option value="descendingTitle">Descending by Purpose</option>
-                                </select>
                             </td>
+                            <td></td>
                             <td>
-                                <label for="eventType">Type: </label>
-                                <select name="eventType" id="eventType">
-                                    <option value="all" id="all">All</option>
-                                    <option value="conference" id="conference">Conference</option>
-                                    <option value="lecture" id="lecture">Lecture</option>
-                                    <option value="training" id="training">Training Course</option>
-                                    <option value="meeting" id="meeting">Meeting/Gathering</option>
-                                    <option value="workshop" id="workshop">Workshop</option>
-                                    <option value="seminar" id="seminar">Seminar</option>
-                                    <option value="agreements" id="agreements">Agreements</option>
-                                    <option value="extracurricular" id="extracurricular">Extracurricular Activity</option>
-                                    <option value="guestReception" id="guestReception">Guest Reception</option>
-                                    <option value="fundedProjects" id="fundedProjects">Funded Projects</option>
-                                    <option value="ceremony" id="ceremony">Ceremony</option>
-                                    <option value="other" id="event-other">Other</option>
-                                </select>
-                            </td>
-                            <td>
-                                <label for="status">Status: </label>
-                                <select name="staus" id="status">
-                                    <option value="all">All</option>
-                                    <option value="approved">Approved</option>
-                                    <option value="rejected">Rejected</option>
-                                    <option value="pending">Pending</option>
-                                </select>
                             </td>
                             <td></td>
                             <td></td>
@@ -92,11 +66,11 @@
                                     <td>{{ req.title }}</td>
                                     <td>{{ req.date }}</td>
                                     {% if req.status == 0 %}
-                                        <td><button class="approve-button" disabled>Pending</button></td>
+                                        <td><button class="pending-button" disabled>Pending</button></td>
                                     {% elif req.status == 1 %}
-                                        <td><button class="approve-button" disabled>Approved</button></td>
+                                        <td><button class="approved-button" disabled>Approved</button></td>
                                     {% else %}
-                                        <td><button class="approve-button" disabled>Rejected</button></td>
+                                        <td><button class="rejected-button" disabled>Rejected</button></td>
                                     {% endif %}
                                     <td>
                                         <a href="/ViewRequestForm/{{req.reservationId}}">
@@ -320,7 +294,6 @@
         <ul class="footer-options">
             <li><a href="/AboutUsAffairs">About Us</a></li>
             <li><a href="/ContactUsAffairs">Contact</a></li>
-        </ul>
-    </footer>   
+    </footer>    
 </body>
 </html> 

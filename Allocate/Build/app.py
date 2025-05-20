@@ -16,6 +16,7 @@ import hashlib
 from flask_mail import Mail, Message
 from email.message import EmailMessage
 import smtplib
+import bcrypt
 
 
 
@@ -24,13 +25,12 @@ app = Flask(__name__)
 # app.secret_key = "your_secret_key"
 
 
-app.config['MAIL_SERVER'] = 'smtp.mail.yahoo.com'
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
-app.config['MAIL_USE_SSL'] = True 
-app.config['MAIL_USE_TLS'] = False
-app.config['MAIL_USERNAME'] = 'jood237@yahoo.com'
-app.config['MAIL_PASSWORD'] = 'rjorzyaabdjwmgmh'  # Use an app password, NOT your Gmail password
-app.config['MAIL_DEFAULT_SENDER'] = 'jood237@yahoo.com'
+app.config['MAIL_USE_SSL'] = True
+app.config['MAIL_USERNAME'] = 'allocatepsut@gmail.com'
+app.config['MAIL_PASSWORD'] = 'tcipiacjtaorprty'  # Use an app password, NOT your Gmail password
+app.config['MAIL_DEFAULT_SENDER'] = 'allocatepsut@gmail.com'
 
 mail = Mail(app)
 
@@ -39,131 +39,6 @@ Session = sessionmaker(bind=engine)
 session = Session()
 
 hashObject = hashlib.sha256()
-
-# init_db()
-
-# User1 = Users(20210042, "Jood Wafa", "Student", "joo20210042@std.psut.edu.jo", "bsbsbs")
-# User2 = Users(20210278, "Salma AlNawaiseh", "Student", "sal20210278@std.psut.edu.jo", "banana milk")
-# User3 = Users(20210559, "Rama Bishawi", "Student", "ram20210559@std.psut.edu.jo", "strawberry shortcake")
-# User4 = Users(20210173, "Abdulkarim Damisi", "Student", "abd20210173@std.psut.edu.jo", "great minds")
-# User5 = Users(20210001, "Diya Momani", "Student", "diy20210001@std.psut.edu.jo", "duckduck")
-# User6 = Users(20210389, "Aya Tell", "Student", "aya20210389@std.psut.edu.jo", "ilovecubes")
-# User7 = Users(20210899, "Lama Amer", "Student", "lam20210899@std.psut.edu.jo", "ilovejude")
-
-# Res1 = Reservations(1, "AI Agents", "Workshop", date(2025, 5, 28), time(1, 0), time(2, 30), 1, None, None, None, 1, 1, None)
-# Res2 = Reservations(1, "ACM Trainings", "Training Course", date(2025, 5, 28), time(14, 0), time(17, 30), 3, None, None, None, 1, 1, None)
-
-# Report1 = Reports(1, "E-Share not working", 1, None, None, 1, True)
-
-# Equipment1 = Equipment("Monitor", "PC3065-LENOVO1-ThinkcenterM92Pi7", "10040712305200010001", True, "Computer", 1)
-
-# Facility1 = Facility("Luai Shammout", "Auditorium", 75, 2, 1)
-# Facility2 = Facility("IT103", "Room", 50, 1, None)
-# Facility3 = Facility("IT102", "Room", 40, 1, None)
-
-# Building1 = Buildings("IT")
-# Building2 = Buildings("ENG")
-# Building3 = Buildings("Bussiness B")
-# Building4 = Buildings("Bussiness D")
-
-# Flowers = Preparations("Flowers")
-# Backdrop = Preparations("Backdrop")
-# Banner = Preparations("Banner/Rollup")
-# Materials = Preparations("Printed Materials")
-# Laptop = Preparations("Laptop")
-# Giftbag = Preparations("Gift Bags")
-# Presentation = Preparations("Presentation")
-# Screen = Preparations("Screen/Projection")
-# Translation = Preparations("Translation")
-# Sound = Preparations("Sound Equipment")
-# Board = Preparations("Guidance Boards")
-# Badges = Preparations("Badges")
-# Electrical = Preparations("Electrical Equipment")
-# Tour = Preparations("University Tour")
-# Stationary = Preparations("Stationary")
-# Visual = Preparations("Visual Equipment")
-# Other = Preparations("Other")
-
-# Photo = Media("Photo/Video")
-# Press = Media("Press")
-# Social = Media("Social Media")
-
-# Parking = Transport("Empty Parking Spaces")
-# Security = Transport("Inform Security")
-# CarBus = Transport("Car/Bus")
-
-# Breakfast = Hospitality("Breakfast")
-# Lunch = Hospitality("Lunch")
-# Dinner = Hospitality("Dinner")
-# Regular = Hospitality("Regular")
-# VIP = Hospitality("VIP")
-# Coffee = Hospitality("Coffee")
-# Juice = Hospitality("Juice")
-# Pastries = Hospitality("Pastries")
-# Biscuits = Hospitality("Biscuits")
-
-# Dep1 = Department("Computer Science")
-# Dep2 = Department("Software Engineering")
-# Dep3 = Department("Cyber Security")
-# Dep4 = Department("Data Science and AI")
-# Dep5 = Department("Computer Graphics")
-# Dep6 = Department("Basic Sciences")
-
-# session.add(Dep1)
-# session.add(Dep2)
-# session.add(Dep3)
-# session.add(Dep4)
-# session.add(Dep5)
-# session.add(Dep6)
-
-# session.add(User1)
-# session.add(User2)
-# session.add(User3)
-# session.add(User4)
-# session.add(User5)
-# session.add(User6)
-# session.add(User7)
-# session.add(Res1)
-# session.add(Res2)
-# session.add(Report1)
-# session.add(Equipment1)
-# session.add(Facility1)
-# session.add(Facility2)
-# session.add(Facility3)
-# session.add(Building1)
-# session.add(Building2)
-# session.add(Building3)
-# session.add(Building4)
-# session.add(Flowers)
-# session.add(Backdrop)
-# session.add(Banner)
-# session.add(Materials)
-# session.add(Laptop)
-# session.add(Giftbag)
-# session.add(Presentation)
-# session.add(Screen)
-# session.add(Translation)
-# session.add(Sound)
-# session.add(Board)
-# session.add(Badges)
-# session.add(Electrical)
-# session.add(Tour)
-# session.add(Visual)
-# session.add(Other)
-# session.add(Photo)
-# session.add(Press)
-# session.add(Social)
-# session.add(Breakfast)
-# session.add(Lunch)
-# session.add(Dinner)
-# session.add(Regular)
-# session.add(VIP)
-# session.add(Coffee)
-# session.add(Juice)
-# session.add(Pastries)
-# session.add(Biscuits)
-
-# session.commit()
 
 @app.route("/logIn", methods=["GET", "POST"])
 def logIn():
@@ -174,23 +49,30 @@ def logIn():
             print(request.form["email"])
         else:
             print("Not found")
+            
             return render_template("login.html", message = "Invalid username")
         
         password = session.query(Users.password).filter_by(email=request.form["email"]).first()[0]
-        print(password)
-        if request.form["password"] == password:
+        # password = hashlib.sha256(password.encode('utf-8')).hexdigest()
+        print("pass = ", password)
+        print("password")
+        entered_password_bytes = request.form["password"].encode('utf-8')
+        # return bcrypt.checkpw(entered_password_bytes, password)
+        if bcrypt.checkpw(entered_password_bytes, password):
             name = session.query(Users.userName).filter_by(email=request.form["email"]).first()[0]
             id = session.query(Users.userId).filter_by(email=request.form["email"]).first()[0]
             role = session.query(Users.role).filter_by(email=request.form["email"]).first()[0]
-            if role == "Student" or "Instructor": 
+            if role == "Student" or role == "Instructor": 
                 return redirect("/Homepage/" + str(id))
                 # return render_template("home_student.html", message = name, id = id)
-            if role == "Student Affairs":
+            if role == "Affairs":
                 return redirect("/ViewPendingRequests")
             if role == "Technician":
                 return redirect("/ViewPendingReports")
             if role == "Registration":
                 return redirect("/GenerateSchedule")
+            if role == "Admin":
+                return redirect("/AddUser")
         else:
             print("Inocrrect password")
             return render_template("login.html", message = "Incorrect password")
@@ -220,7 +102,15 @@ def resetPassword(id):
     
     if request.method == "POST":
         new_password = request.form["password"]
-        user.password = new_password
+        password_bytes = new_password.encode('utf-8')
+
+        hash_object = hashlib.sha256()
+
+        hash_object.update(password_bytes)
+
+        hashed_password = hash_object.hexdigest()
+        user.password = hashed_password
+                
         session.commit()
     
     return render_template("reset_password.html", email=user.email)
@@ -261,36 +151,22 @@ def viewReservations(id):
 def studentHomePage(id):
     name = session.query(Users.userName).filter_by(userId=id).first()[0]
     lastRequest = session.query(Reservations).filter_by(reservedBy=id).order_by(desc(Reservations.reservationId)).first()
-    status = "Pending"
-    if lastRequest.status == 1:
-        status = "Approved"
-    elif lastRequest.status == 2:
-        status = "Rejected"
-    req = {
-        "facility": session.query(Facility.facilityName).filter_by(facilityId=lastRequest.facilityId).first()[0],
-        "time": lastRequest.start.strftime("%H:%M"),
-        "status": status
-    }
-    return render_template("home_student.html", name = name, id = id, req=req)
-
-
-@app.route("/CreateNewPassword/<int:id>", methods = ["GET", "POST"])
-def createNewPassword(id):
-    user = session.query(Users).filter_by(userId=id)
-    if user.password == request.form["oldPassword"]:
-        if request.form["newPassword1"] == request.form["newPassword2"]:
-            user.password = request.form["newPassword1"]
-            session.commit()
-        else:
-            ###### Add the correct templage path and put a suitable message ######
-            return render_template("template.html", message = "New passwords don't match")
-        
+    if lastRequest:
+        status = "Pending"
+        if lastRequest.status == 1:
+            status = "Approved"
+        elif lastRequest.status == 2:
+            status = "Rejected"
+        req = {
+            "facility": session.query(Facility.facilityName).filter_by(facilityId=lastRequest.facilityId).first()[0],
+            "time": lastRequest.start.strftime("%H:%M"),
+            "status": status
+        }
+        return render_template("home_student.html", name = name, id = id, req=req)
+    
     else:
-        ###### Add the correct templage path and put a suitable message ######
-        return render_template("template.html", message = "Incorrect old password")
+        return render_template("home_student.html", name = name, id = id)
 
-    ###### Add the correct templage path (some page for succesfull password change) ######
-    return render_template("template.html")
 
         
 
@@ -706,6 +582,13 @@ def approveRequest(reqId):
     request.status = 1
     session.commit()
     return redirect(url_for("requestApproval", reqId=reqId))
+
+@app.route("/rejectRequest/<int:reqId>")
+def rejectRequest(reqId):
+    request = session.query(Reservations).filter_by(reservationId=reqId).first()
+    request.status = 2
+    session.commit()
+    return redirect(url_for("ViewPendingRequests", reqId=reqId))
 
 @app.route("/RequestApproval/<int:reqId>", methods = ["GET", "POST"])
 def requestApproval(reqId):

@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">  
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />  
     <link rel="stylesheet" href="{{ url_for('static', filename = 'CSS/reservation_form_styles.css') }}">
 </head>
 <body>
@@ -19,6 +19,11 @@
                 <li id="requests-button" class="other-tabs"><a href="/ViewRequests/{{id}}">My Requests</a></li>
                 <li id="reservations-button" class="other-tabs"><a href="/ViewReservations/{{id}}">Reservations</a></li>
                 <li id="reserve-button"><a href="/ReserveSchedule/{{id}}">Reserve Now</a></li>
+                <li id="logout-tab">
+                    <button onclick="window.location.href='/logIn'" id="logout-button">
+                        <span id="logout" class="material-symbols-outlined">logout</span>
+                    </button>
+                </li>
             </ul>
         </header>
         <main>
@@ -262,8 +267,8 @@
                         </div>
                     </div>
                     <div class="button-wrapper">
-                        <button type="clear" id="clear-button"> Clear </button>
-                        <button type="submit" id="submit-button"> Submit </button>
+                        <input type="reset" id="clear-button" value="Clear">
+                        <button type="submit" id="submit-button">Submit</button>
                     </div>
                 </form>
             </div>
@@ -275,12 +280,9 @@
         <ul class="footer-options">
             <li><a href="/AboutUsAcademic">About Us</a></li>
             <li><a href="/ContactUsAcademic">Contact</a></li>
-        </ul>
-    </footer>   
+    </footer>    
 
     <script>
-        
-
         document.addEventListener('DOMContentLoaded', function () {
         const eventTypeSelect = document.getElementById('event-type');
         const otherWrapper = document.getElementById('event-other-wrapper');
@@ -314,17 +316,13 @@
                 nameInput.required = true;
                 nameInput.name = "guestName" + i
         
-                // const cvWrapper = document.createElement('div');
-                // cvWrapper.className = 'cv-upload-wrapper';
-        
                 const cvInput = document.createElement('input');
                 cvInput.type = 'text';
                 cvInput.className = 'cv-input';
                 cvInput.placeholder = 'Link to CV (optional)';
                 cvInput.autocomplete = 'off';
                 cvInput.name = "guestCV" + i
-        
-                // cvWrapper.appendChild(cvInput);
+    
                 row.appendChild(nameInput);
                 row.appendChild(cvInput);
                 container.appendChild(row);
@@ -341,6 +339,7 @@
         toggleInputOnCheck('gift-bag', 'gift-bag-input');
         toggleInputOnCheck('badges', 'badges-input');
         toggleInputOnCheck('preparations-other', 'preparations-other-input');
+
 
     </script>
 

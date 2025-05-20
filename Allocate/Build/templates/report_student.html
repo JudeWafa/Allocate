@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">  
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />  
     <link rel="stylesheet" href="{{ url_for('static', filename = 'CSS/report_student_styles.css') }}">
 </head>
 <body>
@@ -19,6 +19,11 @@
                 <li id="requests-button" class="other-tabs"><a href="/ViewRequests/{{id}}">My Requests</a></li>
                 <li id="reservations-button" class="other-tabs"><a href="/ViewReservations/{{id}}">Reservations</a></li>
                 <li id="reserve-button"><a href="/ReserveForm/{{id}}">Reserve Now</a></li>
+                <li id="logout-tab">
+                    <button onclick="window.location.href='/logIn'" id="logout-button">
+                        <span id="logout" class="material-symbols-outlined">logout</span>
+                    </button>
+                </li>
             </ul>
         </header>
         <main>   
@@ -36,8 +41,8 @@
                         <label for="equipment">Equipment with issue/s <span class="red-star">*</span></label>
                         <select id="equipment" name="equipment">
                             {% if equipment is not none %}
-                                {% for e in equipments %}
-                                    <option value="{{e.name}}">{{e}}</option>
+                                {% for e in equipment %}
+                                    <option value="{{e}}">{{e}}</option>
                                 {% endfor %}
                             {% else %}
                                 <option value="No equipment found.">No equipment found.</option>
@@ -47,8 +52,8 @@
                         <label for="description">Description of issue per equipment <span class="red-star">*</span></label>
                         <textarea name="description" id="description" maxlength="1500" rows="6" required placeholder="Write a detailed description of the issues you faced per equipment within 1500 characters."></textarea>
                         <div class="button-wrapper">
-                            <button type="reset" id="clear-button">Clear</button>
-                            <button type="submit" id="submit-button">Submit</button>
+                            <input type="reset" id="clear-button" value="Clear">
+                            <button type="submit" id="submit-button" onclick="window.location.href='/ViewReservations/{{id}}'">Submit</button>
                         </div>
                         
                     </form>
@@ -63,7 +68,6 @@
         <ul class="footer-options">
             <li><a href="/AboutUsAcademic">About Us</a></li>
             <li><a href="/ContactUsAcademic">Contact</a></li>
-        </ul>
-    </footer>   
+    </footer>    
 </body>
 </html> 

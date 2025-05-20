@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">  
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />  
     <link rel="stylesheet" href="{{ url_for('static', filename = 'CSS/reserve_student_styles.css') }}">
 </head>
 <body>
@@ -19,27 +19,40 @@
                 <li id="requests-button" class="other-tabs"><a href="/ViewRequests/{{id}}">My Requests</a></li>
                 <li id="reservations-button" class="other-tabs"><a href="/ViewReservations/{{id}}">Reservations</a></li>
                 <li id="reserve-button"><a href="/ReserveSchedule/{{id}}">Reserve Now</a></li>
+                <li id="logout-tab">
+                    <button onclick="window.location.href='/logIn'" id="logout-button">
+                        <span id="logout" class="material-symbols-outlined">logout</span>
+                    </button>
+                </li>
             </ul>
         </header>
         <main>  
             <div class="wrapper">
                 <div class="filters">
-                    <select id="building">
-                        <option value="IT">IT</option>
-                        <option value="ENG">ENG</option>
-                    </select>
-                    <select id="room-type">
-                        <option value="room">Lecture Room</option>
-                        <option value="lab">Lab</option>
-                        <option value="auditorium">Auditorium</option>
-                        <option value="outdoor">Outdoor Space</option>
-                    </select>
-                    <input type="number" id="capacity" placeholder="Capacity">
-                    <div class="date-selector">
-                        <button id="prev-date">&lt;</button>
-                        <input type="date" id="selected-date" />
-                        <button id="next-date">&gt;</button>
+                    <div class="filters-left">
+                        <select id="building">
+                            <option value="" disabled selected hidden>Building: IT</option>
+                            <option value="IT">IT</option>
+                            <option value="ENG">ENG</option>
+                            <option value="BUI">BUI</option>
+                            <option value="RSS">RSS</option>
+                        </select>
+                        <select id="facility-type">
+                            <option value="" disabled selected hidden>Type: Lecture Room</option>
+                            <option value="room">Lecture Room</option>
+                            <option value="lab">Lab</option>
+                            <option value="auditorium">Auditorium</option>
+                            <option value="outdoor">Outdoor Space</option>
+                        </select>
+                        <input type="number" id="capacity" placeholder="Capacity" min="0" oninput="validateCapacity()">
+                            <button class="date-arrows" id="prev-date">&lt;</button>
+                            <input type="date" id="selected-date">
+                            <button class="date-arrows" id="next-date">&gt;</button>
                     </div>
+                    <div class="filters-right">
+                        <button id="redirect" onclick="window.location.href='/ReserveForm/{{ id }}'">Go to Form</button>
+                    </div>
+                    
                 </div>
             
                 <div class="schedule-container">
@@ -49,16 +62,17 @@
                 <!-- Modal -->
                 <div id="modal" class="modal hidden">
                     <div class="modal-content">
-                        <h3>Confirm Reservation</h3>
+                        <h3>Confirm Reservation Request</h3>
                         <form method="post" action="">
-                        <!-- <p>Facility: </p> -->
+                            <label for="modal-facility">Facility: </label>
                             <input type="text" id="modal-facility" value="modal-facility" name="facility" readonly/>
-                        <!-- <p id="modal-facility"></p> -->
+                            <br>
                             <label>Start Time: <input type="time" id="start-time" name="start"/></label>
+                            <br>
                             <label>End Time: <input type="time" id="end-time" name="end"/></label>
                             <div class="modal-buttons">
+                                <button id="cancel-btn" type="button">Cancel</button>
                                 <button id="confirm-btn">Confirm</button>
-                                <button id="cancel-btn">Cancel</button>
                             </div>
                         </form>
                     </div>
@@ -73,15 +87,28 @@
         <ul class="footer-options">
             <li><a href="/AboutUsAcademic">About Us</a></li>
             <li><a href="/ContactUsAcademic">Contact</a></li>
-        </ul>
-    </footer> 
+    </footer>  
 
     <script>
+        const selectBuilding = document.getElementById('building');
+        selectBuilding.addEventListener('change', () => {
+            const selectedText = selectBuilding.options[selectBuilding.selectedIndex].text;
+            selectBuilding.options[0].text = `Building: ${selectedText}`;
+            selectBuilding.selectedIndex = 0;
+        });
+    
+        const selectedType = document.getElementById('facility-type');
+        selectedType.addEventListener('change', () => {
+            const selectedText = selectedType.options[selectedType.selectedIndex].text;
+            selectedType.options[0].text = `Type: ${selectedText}`;
+            selectedType.selectedIndex = 0;
+        });
+    
         const today = new Date();
         let currentDate = new Date(today);
         const facilities = ['IT201', 'IT202', 'IT203', 'IT204', 'IT205', 'IT206', 'IT207', 'IT208'];
-        const hours = Array.from({ length: 24 }, (_, i) => i); // 12 AM to 11 PM
-
+        const hours = Array.from({ length: 24 }, (_, i) => i);
+    
         const reservationsByDate = {
             '2025-05-12': [
                 { facility: 'IT201', start: 8, end: 10 },
@@ -93,20 +120,19 @@
                 { facility: 'IT201', start: 9, end: 11 }
             ]
         };
-
+    
         let isDragging = false;
         let dragStartCell = null;
         let dragEndCell = null;
-
+    
         function generateSchedule() {
             const schedule = document.getElementById('schedule');
             schedule.innerHTML = '';
-
+    
             const isToday = currentDate.toDateString() === today.toDateString();
             const dateKey = currentDate.toISOString().split('T')[0];
             const reservedSlots = reservationsByDate[dateKey] || [];
-
-            // Header row
+    
             const headerRow = document.createElement('div');
             headerRow.className = 'row';
             headerRow.appendChild(createCell('', true));
@@ -118,17 +144,16 @@
                 headerRow.appendChild(createCell(label, true));
             });
             schedule.appendChild(headerRow);
-
-            // Facility rows
+    
             facilities.forEach(facility => {
                 schedule.appendChild(createCell(facility, true));
-
+    
                 let hour = 0;
                 while (hour < 24) {
                     const reservation = reservedSlots.find(r => r.facility === facility && r.start === hour);
                     const isPastHour = isToday && hour < today.getHours();
                     const isReservedMiddle = reservedSlots.some(r => r.facility === facility && hour > r.start && hour < r.end);
-
+    
                     if (reservation) {
                         const span = reservation.end - reservation.start;
                         const cell = createCell(`${formatHour(hour)}\nReserved`, false, facility, hour);
@@ -137,7 +162,7 @@
                         schedule.appendChild(cell);
                         hour += span;
                     } else if (isReservedMiddle) {
-                        hour++; // skip middle of reserved span
+                        hour++;
                     } else if (isPastHour) {
                         let startHour = hour;
                         while (
@@ -159,76 +184,78 @@
                 }
             });
         }
-
+    
         function updateDateInput() {
             const input = document.getElementById('selected-date');
             input.valueAsDate = currentDate;
-            input.min = today.toISOString().split('T')[0];
         }
-
+    
         document.getElementById('prev-date').addEventListener('click', () => {
             currentDate.setDate(currentDate.getDate() - 1);
-            if (currentDate < today) currentDate = new Date(today);
             refreshSchedule();
         });
-
+    
         document.getElementById('next-date').addEventListener('click', () => {
             currentDate.setDate(currentDate.getDate() + 1);
             refreshSchedule();
         });
-
+    
         document.getElementById('selected-date').addEventListener('change', (e) => {
             currentDate = new Date(e.target.value);
             refreshSchedule();
         });
-
+    
         function createCell(content, isHeader = false, facility = null, hour = null) {
             const div = document.createElement('div');
             div.className = 'cell';
             if (isHeader) div.classList.add('header');
             div.textContent = content;
-
+    
             if (!isHeader && !div.classList.contains('reserved') && !div.classList.contains('was-available')) {
                 div.dataset.facility = facility;
                 div.dataset.hour = hour;
-
+    
                 div.addEventListener('mousedown', () => {
+                    if (!isDateValid()) {
+                        triggerInvalidDateFeedback();
+                        return;
+                    }
                     isDragging = true;
                     dragStartCell = div;
                     clearSelection();
                     div.classList.add('selected');
                 });
-
+    
                 div.addEventListener('mouseenter', () => {
-                    if (isDragging && div.dataset.facility === dragStartCell.dataset.facility) {
+                    if (!isDragging || !isDateValid()) return;
+                    if (div.dataset.facility === dragStartCell.dataset.facility) {
                         clearSelection();
                         highlightRange(dragStartCell, div);
                     }
                 });
-
+    
                 div.addEventListener('mouseup', () => {
-                    if (!isDragging) return;
+                    if (!isDragging || !isDateValid()) return;
                     isDragging = false;
                     dragEndCell = div;
                     openDragModal(dragStartCell, dragEndCell);
                 });
             }
-
+    
             return div;
         }
-
-
+    
         document.addEventListener('mouseup', () => {
             isDragging = false;
         });
-
+    
         function highlightRange(start, end) {
             const facility = start.dataset.facility;
             const startHour = parseInt(start.dataset.hour);
             const endHour = parseInt(end.dataset.hour);
-
+    
             const [minHour, maxHour] = [startHour, endHour].sort((a, b) => a - b);
-
+    
             const allCells = document.querySelectorAll(`.cell[data-facility='${facility}']`);
             allCells.forEach(cell => {
                 const h = parseInt(cell.dataset.hour);
@@ -237,58 +264,84 @@
                 }
             });
         }
-
+    
         function clearSelection() {
             document.querySelectorAll('.cell.selected').forEach(c => c.classList.remove('selected'));
         }
-
+    
         function formatHour(hour) {
             return hour < 12 ? `${hour}:00 AM` : `${hour === 12 ? 12 : hour - 12}:00 PM`;
         }
-
+    
         function openDragModal(startCell, endCell) {
             const facility = startCell.dataset.facility;
             const h1 = parseInt(startCell.dataset.hour);
             const h2 = parseInt(endCell.dataset.hour);
             const [startHour, endHour] = [h1, h2].sort((a, b) => a - b);
-
+    
             document.getElementById('modal').classList.remove('hidden');
-            document.getElementById('modal-facility').textContent = `Facility: ${facility}`;
             document.getElementById('modal-facility').value = `${facility}`;
             document.getElementById('start-time').value = `${String(startHour).padStart(2, '0')}:00`;
             document.getElementById('end-time').value = `${String(endHour + 1).padStart(2, '0')}:00`;
-
+    
             document.getElementById('confirm-btn').onclick = () => {
                 const start = parseInt(document.getElementById('start-time').value.split(':')[0]);
                 const end = parseInt(document.getElementById('end-time').value.split(':')[0]);
                 const dateKey = currentDate.toISOString().split('T')[0];
                 const reservedSlots = reservationsByDate[dateKey] || [];
-
+    
                 const conflict = reservedSlots.some(r =>
                     r.facility === facility && !(end <= r.start || start >= r.end)
                 );
-
+    
                 if (conflict) {
                     alert("Time slot conflict! Please select another time.");
                     document.getElementById('modal').classList.add('hidden');
                     return;
                 }
-
+    
                 const params = new URLSearchParams({ facility, start, end, date: dateKey });
-                // window.location.href = `/reserve-form?${params.toString()}`;
-                fetch("/ReserveSchedule/{{id}}", {method: "POST"})
+                fetch("/ReserveSchedule/{{id}}", { method: "POST" });
             };
-
+    
             document.getElementById('cancel-btn').onclick = () => {
                 document.getElementById('modal').classList.add('hidden');
             };
+        }
+    
+        function isDateValid() {
+            const selected = new Date(currentDate);
+            const base = new Date(today);
+            selected.setHours(0, 0, 0, 0);
+            base.setHours(0, 0, 0, 0);
+            return selected >= base;
+        }
+    
+        function triggerInvalidDateFeedback() {
+            const input = document.getElementById('selected-date');
+            input.classList.add('invalid-date');
+            input.classList.add('shake');
+            setTimeout(() => input.classList.remove('shake'), 300);
+        }
+    
+        document.getElementById('selected-date').addEventListener('input', () => {
+            if (isDateValid()) {
+                document.getElementById('selected-date').classList.remove('invalid-date');
+            }
+        });
+
+        function validateCapacity(input) {
+            const value = parseInt(input.value, 10);
+            if (isNaN(value) || value < 0) {
+                input.value = 0;
+            }
         }
 
         function refreshSchedule() {
             updateDateInput();
             generateSchedule();
         }
-
+    
         refreshSchedule();
     </script>
 </body>

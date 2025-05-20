@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">  
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />  
     <link rel="stylesheet" href="static/CSS/add_user_admin_styles.css">
 </head>
 <body>
@@ -17,6 +17,11 @@
             <ul id="header-tabs">
                 <li id="add-user-tab" class="other-tabs"><a href="/AddUser">Add User</a></li>
                 <li id="add-club-tab" class="current-tab"><a href="/AddClub">Add Club</a></li>
+                <li id="logout-tab">
+                    <button onclick="window.location.href='/logIn'" id="logout-button">
+                        <span id="logout" class="material-symbols-outlined">logout</span>
+                    </button>
+                </li>
             </ul>
         </header>
         <main>
@@ -60,8 +65,7 @@
         <ul class="footer-options">
             <li><a href="/AboutUsAdmin">About Us</a></li>
             <li><a href="/ContactUsAdmin">Contact</a></li>
-        </ul>
-    </footer>   
+    </footer>    
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {

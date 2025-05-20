@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">  
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />  
     <link rel="stylesheet" href="static/CSS/about_us_styles.css">
 </head>
 <body>
@@ -19,6 +19,11 @@
                 <li id="requests-button" class="other-tabs"><a href="/ViewRequests/{{id}}">My Requests</a></li>
                 <li id="reservations-button" class="other-tabs"><a href="/ViewReservations/{{id}}">Reservations</a></li>
                 <li id="reserve-button"><a href="/ReserveSchedule/{{id}}">Reserve Now</a></li>
+                <li id="logout-tab">
+                    <button onclick="window.location.href='/logIn'" id="logout-button">
+                        <span id="logout" class="material-symbols-outlined">logout</span>
+                    </button>
+                </li>
             </ul>
         </header>
         <main>
@@ -40,7 +45,6 @@
         <ul class="footer-options">
             <li><a href="/AboutUsAcademic">About Us</a></li>
             <li><a href="/ContactUsAcademic">Contact</a></li>
-        </ul>
-    </footer>  
+    </footer>   
 </body>
 </html> 

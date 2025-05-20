@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">  
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />  
     <link rel="stylesheet" href="{{ url_for('static', filename = 'CSS/reservations_student_styles.css') }}">
 </head>
 <body>
@@ -19,6 +19,11 @@
                 <li id="requests-button" class="other-tabs"><a href="/ViewRequests/{{id}}">My Requests</a></li>
                 <li id="reservations-button" class="current-tab"><a href="/ViewReservations/{{id}}">Reservations</a></li>
                 <li id="reserve-button"><a href="/ReserveSchedule/{{id}}">Reserve Now</a></li>
+                <li id="logout-tab">
+                    <button onclick="window.location.href='/logIn'" id="logout-button">
+                        <span id="logout" class="material-symbols-outlined">logout</span>
+                    </button>
+                </li>
             </ul>
         </header>
         <main>
@@ -38,13 +43,7 @@
                                 <th>Time</th>
                                 <th>Location</th>
                                 <th>Problem</th>
-                                <th class="icons-cell">  
-                                    <div class="icon-container">
-                                        <span class="material-symbols-outlined">sort</span>
-                                        <span class="material-symbols-outlined">filter_list</span>
-                                    </div>  
-                                    
-                                </th>
+                                <th class="icons-cell"></th>
                             </tr>
                         </thead>
                         {% for res in reservations %}
@@ -53,15 +52,38 @@
                             <td>{{ res.reservationId }}</td>
                             <td>{{ res.title }}</td>
                             <td>{{ res.facilityName }}</td>
-                            <!-- <td>{{ res.title }}</td> -->
                             <td>{{ res.date }}</td>
                             <td>{{ res.start }}</td>
                             <td>{{ res.location }}</td>
-                            {% if res.reportId is none %}
-                            <td><button class="problem-report"><a href="/ReportIssue/{{res.reservationId}}">Report...</a></button></td>
-                            {% else %}
-                            <td><button class="problem-view"><a href="/ViewReport/{{res.reportId}}/{{id}}">View Report</a></button></td>
-                            {% endif %}
+                            
+                            <td><button 
+                                    class="
+                                        problem-report
+                                        {% if res.reservationId %}
+                                            {% if res.reservationId.status == 'Pending' %}
+                                                problem-blocked
+                                            {% elif res.reservationId.status == 'Approved' %}
+                                                {% set reservation_datetime = res.date.strftime('%Y-%m-%d') ~ ' ' ~ res.time.strftime('%H:%M') %}
+                                                {% set now = current_time.strftime('%Y-%m-%d %H:%M') %}
+                                                {% if reservation_datetime > now %}
+                                                    problem-blocked
+                                                {% endif %}
+                                            {% endif %}
+                                        {% endif %}
+                                    "
+                                    {% if res.reportId is none %}
+                                        onclick="window.location.href='/ReportIssue/{{ res.reservationId }}'"
+                                    {% else %}    
+                                        onclick="window.location.href='/ViewReport/{{ res.reservationId }}/{{id}}'"
+                                    {% endif %}
+                                    >
+                                    {% if res.reportId is none %}
+                                        Report
+                                    {% else %}    
+                                        View Report
+                                    {% endif %}
+                                </button>
+                            </td>
                             <td class="edit-cell"></td>
                         </tr>
                         {% else %}
@@ -175,7 +197,6 @@
         <ul class="footer-options">
             <li><a href="/AboutUsAcademic">About Us</a></li>
             <li><a href="/ContactUsAcademic">Contact</a></li>
-        </ul>
-    </footer>   
+    </footer>    
 </body>
 </html> 

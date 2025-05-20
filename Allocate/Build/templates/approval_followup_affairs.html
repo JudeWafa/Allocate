@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">  
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />  
     <link rel="stylesheet" href="{{ url_for('static', filename='CSS/approval_followup_affairs_styles.css') }}">
 </head>
 <body>
@@ -18,6 +18,11 @@
                 <li id="pending-tab" class="other-tabs"><a href="/ViewPendingRequests">Pending</a></li>
                 <li id="all-tab" class="other-tabs"><a href="/ViewAllRequests">All</a></li>
                 <!-- <li id="schedule-tab" class="other-tabs"><a href="/schedule_affairs.html">Schedule</a></li> -->
+                <li id="logout-tab">
+                    <button onclick="window.location.href='/logIn'" id="logout-button">
+                        <span id="logout" class="material-symbols-outlined">logout</span>
+                    </button>
+                </li>
             </ul>
         </header>
         <main>
@@ -37,7 +42,7 @@
                             </select>
                         </div>
                         <div class="button-wrapper">
-                            <button id="no-button"><a href="/ViewAllRequests">No</a></button>
+                            <button id="no-button"><a href="/ViewAllRequests" id="no">No</a></button>
                             <input type="submit" id="yes-button" value="Yes">
                         </div>
                     </div>
@@ -51,8 +56,7 @@
         <ul class="footer-options">
             <li><a href="/AboutusAffairs">About Us</a></li>
             <li><a href="/ContactUsAffairs">Contact</a></li>
-        </ul>
-    </footer>  
+    </footer>   
     
     <script>
         

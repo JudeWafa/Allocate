@@ -9,16 +9,16 @@
 }
 
 html, body {
-  height: 100vh;
-  margin: 0;
-  padding: 0;
-  background-color: #F8FCFF;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    background-color: #F8FCFF;
 }
 
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 .container {
@@ -27,6 +27,7 @@ html, body {
     position: relative;
     height: 100vh;
     width: 100%;
+    max-width: 100%;
 }
 
 header {
@@ -78,19 +79,56 @@ li {
     color: var(--dark-blue);
 }
 
-#reserve-button a {
+#reserve-button a{
     color: white;
 }
 
 #reserve-button {
-    background-color: var(--blue);
+    background-color: var(--dark-blue);
     border-radius: 7px;
 }
 
 #reservations-button {
+    cursor: pointer;
     margin-right: 2.6%;
 }
 
+#logout-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    margin-right: 0;
+}
+
+#logout-tab {
+    width: 0;
+    display: flex;
+    align-items: center;
+    padding: 1.4% 0;
+    font-size: 1.1rem;
+    font-family: var(--font-family-roboto);
+    font-variation-settings: "wght" 475;
+}
+
+#logout-button span {
+    font-size: 1.6rem; 
+    color: black;
+    transition: color 0.2s;
+}
+
+#logout-button:hover span {
+    color: var(--dark-blue);
+}
+
+#logout {
+    line-height: 1;       
+    display: inline-block;
+    vertical-align: middle;
+}
 
 
 
@@ -140,13 +178,14 @@ tbody::-webkit-scrollbar {
 
 /* FORCE COLUMN WIDTHS */
 th:nth-child(1), td:nth-child(1) { width: 3%; }
-th:nth-child(2), td:nth-child(2) { width: 10%; }
-th:nth-child(3), td:nth-child(3) { width: 15%; }
-th:nth-child(4), td:nth-child(4) { width: 15%; }
-th:nth-child(5), td:nth-child(5) { width: 13%; }
-th:nth-child(6), td:nth-child(6) { width: 13%; }
-th:nth-child(7), td:nth-child(7) { width: 10%; }
-th:nth-child(8), td:nth-child(8) { width: 10%; }
+th:nth-child(2), td:nth-child(2) { width: 10.37%; }
+th:nth-child(3), td:nth-child(3) { width: 17.55%; }
+th:nth-child(4), td:nth-child(4) { width: 18.55%; }
+th:nth-child(5), td:nth-child(5) { width: 16.07%; }
+th:nth-child(6), td:nth-child(6) { width: 16.07%; }
+th:nth-child(7), td:nth-child(7) { width: 12.37%; }
+th:nth-child(8), td:nth-child(8) { width: 3%; }
+th:nth-child(9), td:nth-child(9) { width: 3%; }
 
 thead {
     position: sticky;

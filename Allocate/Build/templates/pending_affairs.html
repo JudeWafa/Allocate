@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">  
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />  
     <link rel="stylesheet" href="pending_affairs_styles.css">
 </head>
 <body>
@@ -17,6 +17,11 @@
             <ul id="header-tabs">
                 <li id="pending-tab" class="current-tab"><a href="/ViewPendingRequests">Pending</a></li>
                 <li id="all-tab" class="other-tabs"><a href="/ViewAllRequests">All</a></li>
+                <li id="logout-tab">
+                    <button onclick="window.location.href='/logIn'" id="logout-button">
+                        <span id="logout" class="material-symbols-outlined">logout</span>
+                    </button>
+                </li>
             </ul>
         </header>
         <main>
@@ -29,34 +34,11 @@
                         <tr id="filters">
                             <td class="empty"></td>
                             <td>
-                                 <input type="search" id="search" placeholder="Search" autocomplete="off">
+                                <input type="search" id="search" placeholder="Search" autocomplete="off">
                             </td>
                             <td>
-                                <label for="sort">Sort: </label>
-                                <select name="sort" id="sort">
-                                    <option value="ascendingTime">Oldest First</option>
-                                    <option value="descendingTime">Newest First</option>
-                                    <option value="ascendingTitle">Ascending by Purpose</option>
-                                    <option value="descendingTitle">Descending by Purpose</option>
-                                </select>
                             </td>
                             <td>
-                                <label for="eventType">Type: </label>
-                                <select name="eventType" id="eventType">
-                                    <option value="all" id="all">All</option>
-                                    <option value="conference" id="conference">Conference</option>
-                                    <option value="lecture" id="lecture">Lecture</option>
-                                    <option value="training" id="training">Training Course</option>
-                                    <option value="meeting" id="meeting">Meeting/Gathering</option>
-                                    <option value="workshop" id="workshop">Workshop</option>
-                                    <option value="seminar" id="seminar">Seminar</option>
-                                    <option value="agreements" id="agreements">Agreements</option>
-                                    <option value="extracurricular" id="extracurricular">Extracurricular Activity</option>
-                                    <option value="guestReception" id="guestReception">Guest Reception</option>
-                                    <option value="fundedProjects" id="fundedProjects">Funded Projects</option>
-                                    <option value="ceremony" id="ceremony">Ceremony</option>
-                                    <option value="other" id="event-other">Other</option>
-                                </select>
                             </td>
                             <td></td>
                             <td></td>
@@ -86,7 +68,7 @@
                                     <td><button class="approve-button">Approve</button></td>
                                     <td>
                                         <span class="more-arrow">
-                                            <svg  viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M10 7L15 12L10 17" stroke-linecap="round"/>
                                             </svg>
                                         </span>
@@ -98,215 +80,6 @@
                                     <td colspan="11">No pending requests.</td>
                                 </tr>
                             {% endfor %}
-                            <!-- <tr>
-                                <td class="empty"></td>
-                                <td>Anas Abu Taleb</td>
-                                <td>IT103</td>
-                                <td>Extra OOP Session</td>
-                                <td>12/10/2025</td>
-                                <td><button class="approve-button">Approve</button></td>
-                                <td>
-                                    <span class="more-arrow">
-                                        <svg  viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M10 7L15 12L10 17" stroke-linecap="round"/>
-                                        </svg>
-                                    </span>
-                                </td>
-                                <td class="edit-cell"></td>
-                            </tr>
-                            <tr>
-                                <td class="empty"></td>
-                                <td>Salma AlNawaiseh</td>
-                                <td>Friendship</td>
-                                <td>Flutter Training Course</td>
-                                <td>24/01/2025</td>
-                                <td><button class="approve-button">Approve</button></td>
-                                <td>
-                                    <span class="more-arrow">
-                                        <svg  viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M10 7L15 12L10 17"  stroke-linecap="round"/>
-                                        </svg>
-                                    </span>
-                                </td>
-                                <td class="edit-cell"></td>
-                            </tr>
-                            <tr>
-                                <td class="empty"></td>
-                                <td>Jude Wafa</td>
-                                <td>ENG301</td>
-                                <td>Algorithms Coursefgdsgfgfdgfdgfdfgdfdfdfddffddfdfdf</td>
-                                <td>29/01/2025</td>
-                                <td><button class="approve-button">Approve</button></td>
-                                <td>
-                                    <span class="more-arrow">
-                                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M10 7L15 12L10 17" stroke-linecap="round"/>
-                                        </svg>
-                                    </span>
-                                </td>
-                                <td class="edit-cell"></td>
-                            </tr>
-                            <tr>
-                                <td class="empty"></td>
-                                <td>Lama Amer</td>
-                                <td>Louai Shamout</td>
-                                <td>Meet the Team - LA Club</td>
-                                <td>29/10/2025</td>
-                                <td><button class="approve-button">Approve</button></td>
-                                <td>
-                                    <span class="more-arrow">
-                                        <svg  viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M10 7L15 12L10 17"  stroke-linecap="round"/>
-                                        </svg>
-                                    </span>
-                                </td>
-                                <td class="edit-cell"></td>
-                            </tr>
-                            <tr>
-                                <td class="empty"></td>
-                                <td>Anas Abu Taleb</td>
-                                <td>IT103</td>
-                                <td>Extra OOP Session</td>
-                                <td>12/10/2025</td>
-                                <td><button class="approve-button">Approve</button></td>
-                                <td>
-                                    <span class="more-arrow">
-                                        <svg  viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M10 7L15 12L10 17"  stroke-linecap="round"/>
-                                        </svg>
-                                    </span>
-                                </td>
-                                <td class="edit-cell"></td>
-                            </tr>
-                            <tr>
-                                <td class="empty"></td>
-                                <td>Salma AlNawaiseh</td>
-                                <td>Friendship</td>
-                                <td>Flutter Training Course</td>
-                                <td>24/01/2025</td>
-                                <td><button class="approve-button">Approve</button></td>
-                                <td>
-                                    <span class="more-arrow">
-                                        <svg  viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M10 7L15 12L10 17"  stroke-linecap="round"/>
-                                        </svg>
-                                    </span>
-                                </td>
-                                <td class="edit-cell"></td>
-                            </tr>
-                            <tr>
-                                <td class="empty"></td>
-                                <td>Jude Wafa</td>
-                                <td>ENG301</td>
-                                <td>Algorithms Course</td>
-                                <td>29/01/2025</td>
-                                <td><button class="approve-button">Approve</button></td>
-                                <td>
-                                    <span class="more-arrow">
-                                        <svg  viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M10 7L15 12L10 17"  stroke-linecap="round"/>
-                                        </svg>
-                                    </span>
-                                </td>
-                                <td class="edit-cell"></td>
-                            </tr>
-                            <tr>
-                                <td class="empty"></td>
-                                <td>Lama Amer</td>
-                                <td>Louai Shamout</td>
-                                <td>Meet the Team - LA Club Meetup</td>
-                                <td>29/10/2025</td>
-                                <td><button class="approve-button">Approve</button></td>
-                                <td>
-                                    <span class="more-arrow">
-                                        <svg  viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M10 7L15 12L10 17"  stroke-linecap="round"/>
-                                        </svg>
-                                    </span>
-                                </td>
-                                <td class="edit-cell"></td>
-                            </tr>
-                            <tr>
-                                <td class="empty"></td>
-                                <td>Anas Abu Taleb</td>
-                                <td>IT103</td>
-                                <td>Extra OOP Session</td>
-                                <td>12/10/2025</td>
-                                <td><button class="approve-button">Approve</button></td>
-                                <td>
-                                    <span class="more-arrow">
-                                        <svg  viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M10 7L15 12L10 17"  stroke-linecap="round"/>
-                                        </svg>
-                                    </span>
-                                </td>
-                                <td class="edit-cell"></td>
-                            </tr>
-                            <tr>
-                                <td class="empty"></td>
-                                <td>Salma AlNawaiseh</td>
-                                <td>Friendship</td>
-                                <td>Flutter Training Course</td>
-                                <td>24/01/2025</td>
-                                <td><button class="approve-button">Approve</button></td>
-                                <td>
-                                    <span class="more-arrow">
-                                        <svg  viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M10 7L15 12L10 17"  stroke-linecap="round"/>
-                                        </svg>
-                                    </span>
-                                </td>
-                                <td class="edit-cell"></td>
-                            </tr>
-                            <tr>
-                                <td class="empty"></td>
-                                <td>Jude Wafa</td>
-                                <td>ENG301</td>
-                                <td>Algorithms Course</td>
-                                <td>29/01/2025</td>
-                                <td><button class="approve-button">Approve</button></td>
-                                <td>
-                                    <span class="more-arrow">
-                                        <svg  viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M10 7L15 12L10 17"  stroke-linecap="round"/>
-                                        </svg>
-                                    </span>
-                                </td>
-                                <td class="edit-cell"></td>
-                            </tr>
-                            <tr>
-                                <td class="empty"></td>
-                                <td>Lama Amer</td>
-                                <td>Louai Shamout</td>
-                                <td>Meet the Team - LA Club</td>
-                                <td>29/10/2025</td>
-                                <td><button class="approve-button">Approve</button></td>
-                                <td>
-                                    <span class="more-arrow">
-                                        <svg  viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M10 7L15 12L10 17"  stroke-linecap="round"/>
-                                        </svg>
-                                    </span>
-                                </td>
-                                <td class="edit-cell"></td>
-                            </tr>
-                            <tr>
-                                <td class="empty"></td>
-                                <td>TESSSSTTT   TTT</td>
-                                <td>Louai Shamout</td>
-                                <td>Meet the Team - LA Club</td>
-                                <td>29/10/2025</td>
-                                <td><button class="approve-button">Approve</button></td>
-                                <td>
-                                    <span class="more-arrow">
-                                        <svg  viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M10 7L15 12L10 17"  stroke-linecap="round"/>
-                                        </svg>
-                                    </span>
-                                </td>
-                                <td class="edit-cell"></td>
-                            </tr> -->
-                            <!-- javascript will populate body -->
                         </tbody>
                 </table>
                 </div>
@@ -320,7 +93,6 @@
         <ul class="footer-options">
             <li><a href="/AboutUsAffairs">About Us</a></li>
             <li><a href="/ContactUsAffairs">Contact</a></li>
-        </ul>
-    </footer>   
+    </footer>    
 </body>
 </html> 

@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">  
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />  
     <link rel="stylesheet" href="static/CSS/contact_us_styles.css">
 </head>
 <body>
@@ -17,6 +17,11 @@
             <ul id="header-tabs">
                 <li id="pending-tab" class="other-tabs"><a href="/ViewPendingRequests">Pending</a></li>
                 <li id="all-tab" class="other-tabs"><a href="/ViewAllRequests">All</a></li>
+                <li id="logout-tab">
+                    <button onclick="window.location.href='/logIn'" id="logout-button">
+                        <span id="logout" class="material-symbols-outlined">logout</span>
+                    </button>
+                </li>
             </ul>
         </header>
         <main>
@@ -66,7 +71,6 @@
         <ul class="footer-options">
             <li><a href="/AboutusAffairs">About Us</a></li>
             <li><a href="/ContactUsAffairs">Contact</a></li>
-        </ul>
-    </footer>  
+    </footer>   
 </body>
 </html> 

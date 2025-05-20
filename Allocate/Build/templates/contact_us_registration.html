@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">  
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />  
     <link rel="stylesheet" href="static/CSS/contact_us_styles.css">
 </head>
 <body>
@@ -17,6 +17,11 @@
             <ul id="header-tabs">
                 <li id="schedule-tab" class="other-tabs"><a href="/GenerateSchedule">Generate Schedule</a></li>
                 <!-- <li id="rooms-tab" class="other-tabs"><a href="/rooms_registration.html">Suitable Rooms</a></li> -->
+                <li id="logout-tab">
+                    <button onclick="window.location.href='/logIn'" id="logout-button">
+                        <span id="logout" class="material-symbols-outlined">logout</span>
+                    </button>
+                </li>
             </ul>
         </header>
         <main>
@@ -66,7 +71,6 @@
         <ul class="footer-options">
             <li><a href="/AboutUsRegistration">About Us</a></li>
             <li><a href="/ContactUsRegistration">Contact</a></li>
-        </ul>
-    </footer>  
+    </footer>   
 </body>
 </html> 

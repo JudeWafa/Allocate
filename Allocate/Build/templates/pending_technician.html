@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">  
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />  
     <link rel="stylesheet" href="static/CSS/pending_technician_styles.css">
 </head>
 <body>
@@ -17,6 +17,11 @@
             <ul id="header-tabs">
                 <li id="pending-tab" class="current-tab"><a href="/ViewPendingReports">Pending</a></li>
                 <li id="all-tab" class="other-tabs"><a href="/ViewAllReports">All</a></li>
+                <li id="logout-tab">
+                    <button onclick="window.location.href='/logIn'" id="logout-button">
+                        <span id="logout" class="material-symbols-outlined">logout</span>
+                    </button>
+                </li>
             </ul>
         </header>
         <main>
@@ -32,21 +37,8 @@
                                  <input type="search" id="search" placeholder="Search" autocomplete="off">
                             </td>
                             <td>
-                                <label for="sort">Sort: </label>
-                                <select name="sort" id="sort">
-                                    <option value="ascendingTime">Oldest First</option>
-                                    <option value="descendingTime">Newest First</option>
-                                </select>
                             </td>
                             <td>
-                                <label for="building">Building: </label>
-                                <select name="building" id="building">
-                                    <option value="all" id="all">All</option>
-                                    <option value="IT" id="IT">IT</option>
-                                    <option value="ENG" id="ENG">ENG</option>
-                                    <option value="BUI" id="BUI">BUI</option>
-                                    <option value="RSS" id="RSS">RSS</option>
-                                </select>
                             </td>
                             <td></td>
                             <td></td>
@@ -87,202 +79,9 @@
                                 </tr>
                                 {% else %}
                                 <tr>
-                                    <td colspan="11">No pending reports.</td>
+                                    <td colspan="11" style="text-align: center;">No pending reports.</td>
                                 </tr>
                             {% endfor %}
-                            <!-- <tr>
-                                <td class="empty"></td>
-                                <td>Anas Abu Taleb</td>
-                                <td>IT103</td>
-                                <td>The board stopped working and we tried to </td>
-                                <td></td>
-                                <td><button class="resolve-button">Resolve</button></td>
-                                <td>
-                                    <span class="more-arrow">
-                                        <svg  viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M10 7L15 12L10 17" stroke-linecap="round"/>
-                                        </svg>
-                                    </span>
-                                </td>
-                                <td class="edit-cell"></td>
-                            </tr>
-                            <tr>
-                                <td class="empty"></td>
-                                <td>Salma AlNawaiseh</td>
-                                <td>Friendship</td>
-                                <td>The keyboards are not working and the projector is </td>
-                                <td></td>
-                                <td><button class="resolve-button">Resolve</button></td>
-                                <td>
-                                    <span class="more-arrow">
-                                        <svg  viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M10 7L15 12L10 17"  stroke-linecap="round"/>
-                                        </svg>
-                                    </span>
-                                </td>
-                                <td class="edit-cell"></td>
-                            </tr>
-                            <tr>
-                                <td class="empty"></td>
-                                <td>Jude Wafa</td>
-                                <td>Luai Shamout</td>
-                                <td>The keyboards are not working and the projector is feqffdafasdasf</td>
-                                <td></td>
-                                <td><button class="resolve-button">Resolve</button></td>
-                                <td>
-                                    <span class="more-arrow">
-                                        <svg  viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M10 7L15 12L10 17"  stroke-linecap="round"/>
-                                        </svg>
-                                    </span>
-                                </td>
-                                <td class="edit-cell"></td>
-                            </tr>
-                            <tr>
-                                <td class="empty"></td>
-                                <td>Lama Amer</td>
-                                <td>Friendship</td>
-                                <td>The speakers are not working and the projector is dwsdsdsadsadsadsadsa</td>
-                                <td></td>
-                                <td><button class="resolve-button">Resolve</button></td>
-                                <td>
-                                    <span class="more-arrow">
-                                        <svg  viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M10 7L15 12L10 17"  stroke-linecap="round"/>
-                                        </svg>
-                                    </span>
-                                </td>
-                                <td class="edit-cell"></td>
-                            </tr>
-                            <tr>
-                                <td class="empty"></td>
-                                <td>Anas Abu Taleb</td>
-                                <td>IT103</td>
-                                <td>The board stopped working and we tried to </td>
-                                <td></td>
-                                <td><button class="resolve-button">Resolve</button></td>
-                                <td>
-                                    <span class="more-arrow">
-                                        <svg  viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M10 7L15 12L10 17" stroke-linecap="round"/>
-                                        </svg>
-                                    </span>
-                                </td>
-                                <td class="edit-cell"></td>
-                            </tr>
-                            <tr>
-                                <td class="empty"></td>
-                                <td>Salma AlNawaiseh</td>
-                                <td>Friendship</td>
-                                <td>The keyboards are not working and the projector is </td>
-                                <td></td>
-                                <td><button class="resolve-button">Resolve</button></td>
-                                <td>
-                                    <span class="more-arrow">
-                                        <svg  viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M10 7L15 12L10 17"  stroke-linecap="round"/>
-                                        </svg>
-                                    </span>
-                                </td>
-                                <td class="edit-cell"></td>
-                            </tr>
-                            <tr>
-                                <td class="empty"></td>
-                                <td>Jude Wafa</td>
-                                <td>Luai Shamout</td>
-                                <td>The keyboards are not working and the projector is feqffdafasdasf</td>
-                                <td></td>
-                                <td><button class="resolve-button">Resolve</button></td>
-                                <td>
-                                    <span class="more-arrow">
-                                        <svg  viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M10 7L15 12L10 17"  stroke-linecap="round"/>
-                                        </svg>
-                                    </span>
-                                </td>
-                                <td class="edit-cell"></td>
-                            </tr>
-                            <tr>
-                                <td class="empty"></td>
-                                <td>Lama Amer</td>
-                                <td>Friendship</td>
-                                <td>The speakers are not working and the projector is dwsdsdsadsadsadsadsa</td>
-                                <td></td>
-                                <td><button class="resolve-button">Resolve</button></td>
-                                <td>
-                                    <span class="more-arrow">
-                                        <svg  viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M10 7L15 12L10 17"  stroke-linecap="round"/>
-                                        </svg>
-                                    </span>
-                                </td>
-                                <td class="edit-cell"></td>
-                            </tr>
-                            <tr>
-                                <td class="empty"></td>
-                                <td>Anas Abu Taleb</td>
-                                <td>IT103</td>
-                                <td>The board stopped working and we tried to </td>
-                                <td></td>
-                                <td><button class="resolve-button">Resolve</button></td>
-                                <td>
-                                    <span class="more-arrow">
-                                        <svg  viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M10 7L15 12L10 17" stroke-linecap="round"/>
-                                        </svg>
-                                    </span>
-                                </td>
-                                <td class="edit-cell"></td>
-                            </tr>
-                            <tr>
-                                <td class="empty"></td>
-                                <td>Salma AlNawaiseh</td>
-                                <td>Friendship</td>
-                                <td>The keyboards are not working and the projector is </td>
-                                <td></td>
-                                <td><button class="resolve-button">Resolve</button></td>
-                                <td>
-                                    <span class="more-arrow">
-                                        <svg  viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M10 7L15 12L10 17"  stroke-linecap="round"/>
-                                        </svg>
-                                    </span>
-                                </td>
-                                <td class="edit-cell"></td>
-                            </tr>
-                            <tr>
-                                <td class="empty"></td>
-                                <td>Jude Wafa</td>
-                                <td>Luai Shamout</td>
-                                <td>The keyboards are not working and the projector is feqffdafasdasf</td>
-                                <td></td>
-                                <td><button class="resolve-button">Resolve</button></td>
-                                <td>
-                                    <span class="more-arrow">
-                                        <svg  viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M10 7L15 12L10 17"  stroke-linecap="round"/>
-                                        </svg>
-                                    </span>
-                                </td>
-                                <td class="edit-cell"></td>
-                            </tr>
-                            <tr>
-                                <td class="empty"></td>
-                                <td>Lama Amer</td>
-                                <td>Friendship</td>
-                                <td>The speakers are not working and the projector is dwsdsdsadsadsadsadsa</td>
-                                <td></td>
-                                <td><button class="resolve-button">Resolve</button></td>
-                                <td>
-                                    <span class="more-arrow">
-                                        <svg  viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M10 7L15 12L10 17"  stroke-linecap="round"/>
-                                        </svg>
-                                    </span>
-                                </td>
-                                <td class="edit-cell"></td>
-                            </tr> -->
-                            <!-- javascript will populate body -->
                         </tbody>
                 </table>
                 </div>
@@ -296,7 +95,6 @@
         <ul class="footer-options">
             <li><a href="/AboutUsTechnician">About Us</a></li>
             <li><a href="/ContactUsTechnician">Contact</a></li>
-        </ul>
-    </footer>   
+    </footer>    
 </body>
 </html> 

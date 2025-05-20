@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">  
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />  
     <link rel="stylesheet" href="{{ url_for('static', filename = 'CSS/report_technician_styles.css') }}">
 </head>
 <body>
@@ -15,8 +15,13 @@
         <header>
             <p id="text-logo">Allocate</p>
             <ul id="header-tabs">
-                <li id="pending-tab" class="current-tab"><a href="/ViewPendingReports">Pending</a></li>
+                <li id="pending-tab" class="other-tabs"><a href="/ViewPendingReports">Pending</a></li>
                 <li id="all-tab" class="other-tabs"><a href="/ViewAllReports">All</a></li>
+                <li id="logout-tab">
+                    <button onclick="window.location.href='/logIn'" id="logout-button">
+                        <span id="logout" class="material-symbols-outlined">logout</span>
+                    </button>
+                </li>
             </ul>
         </header>
         <main>   
@@ -29,14 +34,13 @@
                         <label for="equipment">Equipment with issue/s <span class="red-star">*</span></label>
                         <input type="text" id="equipment" value="{{equipment}}" placeholder="Equipment separated by commas" readonly>
                         <label for="description" >Description of issue per equipment <span class="red-star">*</span></label>
-                        <textarea id="description" value="{{description}}" maxlength="1500" rows="20" readonly></textarea>
+                        <textarea id="description" value="{{description}}" maxlength="1500" rows="20" readonly>{{description}}</textarea>
                         <label for="comments">Add any description or comments</label>
                         <textarea id="comments" name="comment" maxlength="1500" rows="20"></textarea>
                         <div class="button-wrapper">
                             <input type="submit" value="Save" id="save-button">
-                            <button id="resolve-button" onclick="resolveReport()"><a href="ViewAllReports">Resolve</a></button>
+                            <button id="resolve-button" onclick="window.location.href='/ViewAllReports'">Resolve</button>
                         </div>
-                        
                     </form>
                 </div>
             </div>
@@ -48,7 +52,6 @@
         <ul class="footer-options">
             <li><a href="/AboutUsTechnician">About Us</a></li>
             <li><a href="/ContactUsTechnician">Contact</a></li>
-        </ul>
-    </footer>   
+    </footer>    
 </body>
 </html> 

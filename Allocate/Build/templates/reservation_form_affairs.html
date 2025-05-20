@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">  
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />  
     <link rel="stylesheet" href="{{ url_for('static', filename = 'CSS/reservation_form_affairs_styles.css') }}">
 </head>
 <body>
@@ -17,13 +17,17 @@
             <ul id="header-tabs">
                 <li id="pending-tab" class="other-tabs"><a href="/ViewPendingRequests">Pending</a></li>
                 <li id="all-tab" class="other-tabs"><a href="/ViewAllRequests">All</a></li>
-                <!-- <li id="schedule-tab" class="other-tabs"><a href="/schedule_affairs.html">Schedule</a></li> -->
+                <li id="logout-tab">
+                    <button onclick="window.location.href='/logIn'" id="logout-button">
+                        <span id="logout" class="material-symbols-outlined">logout</span>
+                    </button>
+                </li>
             </ul>
         </header>
         <main>
             <div class="form-wrapper">
                 <h1 class="form-header">Reservation Form</h1>
-                <form action="" method="get">
+                <form action="" method="post">
                     <div class="section">
                         <div class="section-header">
                             <span>Event Details</span>
@@ -37,7 +41,7 @@
                             </select>
                             <div id="event-other-wrapper">
                                 <label for="event-other-input">Other: </label>
-                                <input name="eventOtherInput" type="text" id="event-other-input" placeholder="Specify event type" readonly>
+                                <input name="eventOtherInput" type="text" id="event-other-input" value="{{ res.eventOtherInput if res.eventOtherInput else '' }}" readonly>
                             </div>
                             <label for="agenda">Agenda </label> <br>
                             <input name="agenda" type="text" id="agenda" value="{{res.agenda}}" placeholder="Link to agenda document" readonly>
@@ -207,8 +211,8 @@
                     <div class="button-wrapper">
                         <button id="back" onclick="history.back()">Back</button>
                         {% if res.status == 0 %}
-                            <button id="rejectRequest"><a href="/ViewPendingRequests">Reject</a></button>
-                            <button id="approveRequest" ><a href="/approveRequest/{{res.reservationId}}">Approve</a></button>
+                            <button id="rejectRequest"><a href="/rejectRequest/{{res.reservationId}}" id="approve">Reject</a></button>
+                            <button id="approveRequest"><a href="/approveRequest/{{res.reservationId}}" id="approve">Approve</a></button>
                         {% else %}
                             <button id="rejectRequest" class="blocked" disabled>Reject</button>
                             <button id="approveRequest" class="blocked" disabled>Approve</button>
@@ -224,49 +228,6 @@
         <ul class="footer-options">
             <li><a href="/AboutUsAffairs">About Us</a></li>
             <li><a href="/ContactUsAffairs">Contact</a></li>
-        </ul>
-    </footer>  
-    
-    <script>
-        for (let i = 0; i < count; i++) {
-                const row = document.createElement('div');
-                row.className = 'guest-row';
-        
-                const nameInput = document.createElement('input');
-                nameInput.type = 'text';
-                nameInput.placeholder = `Guest ${i + 1}'s Name`;
-                nameInput.className = 'guest-name';
-                nameInput.required = true;
-                nameInput.name = "guestName" + i
-        
-                // const cvWrapper = document.createElement('div');
-                // cvWrapper.className = 'cv-upload-wrapper';
-        
-                const cvInput = document.createElement('input');
-                cvInput.type = 'text';
-                cvInput.className = 'cv-input';
-                cvInput.placeholder = 'Link to CV (optional)';
-                cvInput.autocomplete = 'off';
-                cvInput.name = "guestCV" + i
-        
-                // cvWrapper.appendChild(cvInput);
-                row.appendChild(nameInput);
-                row.appendChild(cvInput);
-                container.appendChild(row);
-            }
-        
-
-        document.addEventListener('DOMContentLoaded', function () {
-            // check if other is selected
-            const eventTypeSelect = document.getElementById('event-type');
-            const otherWrapper = document.getElementById('event-other-wrapper');
-            if (eventTypeSelect.value === 'other') {
-                otherWrapper.style.display = 'block';
-            } 
-            else {
-                otherWrapper.style.display = 'none';
-            }
-        });
-    </script>
+    </footer>   
 </body>
 </html> 

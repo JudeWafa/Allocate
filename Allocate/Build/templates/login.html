@@ -19,8 +19,11 @@
             <form method="post" action="">
                 <input type="text" id="email" name="email" placeholder="Email">
                 <input type="password" id="password" name="password" placeholder="Password">
+                {% if message %}
+                <span id="invalid">{{message}}</span>
+                {% endif %}
                 <div id="password_wrapper">
-                    <a href="/forgot_password" type="button" id="forgot_password">Forgot Password</a>
+                    <a href="/ForgotPassword" type="button" id="forgot_password">Forgot Password</a>
                 </div>
                 <button type="submit" id="login_button">Login</button>
             </form>
@@ -31,7 +34,12 @@
         <ul class="footer-options">
             <li><a href="/about">About Us</a></li>
             <li><a href="/contact">Contact</a></li>
-        </ul>
+            <li id="logout-tab">
+                    <button onclick="window.location.href='/logIn'" id="logout-button">
+                        <span id="logout" class="material-symbols-outlined">logout</span>
+                    </button>
+                </li>
+            </ul>
     </footer>
 </body>
 </html>
