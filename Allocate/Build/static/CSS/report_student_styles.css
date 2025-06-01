@@ -253,7 +253,7 @@ textarea {
     flex-direction: row;
     gap: 3%;
     justify-content: end;
-    height: 9%;
+    height: 80px;
 }
 
 button {

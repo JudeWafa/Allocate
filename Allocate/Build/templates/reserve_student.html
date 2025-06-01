@@ -44,15 +44,14 @@
                             <option value="auditorium">Auditorium</option>
                             <option value="outdoor">Outdoor Space</option>
                         </select>
-                        <input type="number" id="capacity" placeholder="Capacity" min="0" oninput="validateCapacity()">
-                            <button class="date-arrows" id="prev-date">&lt;</button>
-                            <input type="date" id="selected-date">
-                            <button class="date-arrows" id="next-date">&gt;</button>
+                        <input type="number" id="capacity" placeholder="Capacity" min="0" oninput="validateCapacity(this)">
+                        <button class="date-arrows" id="prev-date">&lt;</button>
+                        <input type="date" id="selected-date">
+                        <button class="date-arrows" id="next-date">&gt;</button>
                     </div>
                     <div class="filters-right">
                         <button id="redirect" onclick="window.location.href='/ReserveForm/{{ id }}'">Go to Form</button>
                     </div>
-                    
                 </div>
             
                 <div class="schedule-container">
@@ -64,6 +63,7 @@
                     <div class="modal-content">
                         <h3>Confirm Reservation Request</h3>
                         <form method="post" action="">
+                            <input type="date" name="date" id="set-date" hidden>
                             <label for="modal-facility">Facility: </label>
                             <input type="text" id="modal-facility" value="modal-facility" name="facility" readonly/>
                             <br>
@@ -78,16 +78,25 @@
                     </div>
                 </div>
             </div>
-            
-            
         </main>
     </div>
+
     <footer>
         <img id="psut-logo" src="{{ url_for('static', filename = 'images/psut_logo_white.png') }}">
         <ul class="footer-options">
             <li><a href="/AboutUsAcademic">About Us</a></li>
             <li><a href="/ContactUsAcademic">Contact</a></li>
+        </ul>
     </footer>  
+
+    <script id="reservations-data" type="application/json">
+        {{ reservations | tojson }}
+    </script>
+    <script>
+        const reservationList = JSON.parse(document.getElementById('reservations-data').textContent);
+    </script>
+    
+    
 
     <script>
         const selectBuilding = document.getElementById('building');
@@ -96,43 +105,41 @@
             selectBuilding.options[0].text = `Building: ${selectedText}`;
             selectBuilding.selectedIndex = 0;
         });
-    
+
         const selectedType = document.getElementById('facility-type');
         selectedType.addEventListener('change', () => {
             const selectedText = selectedType.options[selectedType.selectedIndex].text;
             selectedType.options[0].text = `Type: ${selectedText}`;
             selectedType.selectedIndex = 0;
         });
-    
+
         const today = new Date();
         let currentDate = new Date(today);
         const facilities = ['IT201', 'IT202', 'IT203', 'IT204', 'IT205', 'IT206', 'IT207', 'IT208'];
         const hours = Array.from({ length: 24 }, (_, i) => i);
-    
-        const reservationsByDate = {
-            '2025-05-12': [
-                { facility: 'IT201', start: 8, end: 10 },
-                { facility: 'IT203', start: 11, end: 12 },
-                { facility: 'IT207', start: 13, end: 15 },
-                { facility: 'IT206', start: 13, end: 14 }
-            ],
-            '2025-05-13': [
-                { facility: 'IT201', start: 9, end: 11 }
-            ]
-        };
-    
+
+        let reservationsByDate = {};
+        reservationList.forEach(res => {
+            if (!reservationsByDate[res.date]) reservationsByDate[res.date] = [];
+            reservationsByDate[res.date].push({
+                facility: res.facility,
+                start: res.start,
+                end: res.end
+            });
+        });
+
         let isDragging = false;
         let dragStartCell = null;
         let dragEndCell = null;
-    
+
         function generateSchedule() {
             const schedule = document.getElementById('schedule');
             schedule.innerHTML = '';
-    
+
             const isToday = currentDate.toDateString() === today.toDateString();
             const dateKey = currentDate.toISOString().split('T')[0];
             const reservedSlots = reservationsByDate[dateKey] || [];
-    
+
             const headerRow = document.createElement('div');
             headerRow.className = 'row';
             headerRow.appendChild(createCell('', true));
@@ -144,22 +151,24 @@
                 headerRow.appendChild(createCell(label, true));
             });
             schedule.appendChild(headerRow);
-    
+
             facilities.forEach(facility => {
-                schedule.appendChild(createCell(facility, true));
-    
+                const row = document.createElement('div');
+                row.className = 'row';
+                row.appendChild(createCell(facility, true));
+
                 let hour = 0;
                 while (hour < 24) {
                     const reservation = reservedSlots.find(r => r.facility === facility && r.start === hour);
                     const isPastHour = isToday && hour < today.getHours();
                     const isReservedMiddle = reservedSlots.some(r => r.facility === facility && hour > r.start && hour < r.end);
-    
+
                     if (reservation) {
                         const span = reservation.end - reservation.start;
                         const cell = createCell(`${formatHour(hour)}\nReserved`, false, facility, hour);
                         cell.classList.add('reserved');
                         cell.style.gridColumn = `span ${span}`;
-                        schedule.appendChild(cell);
+                        row.appendChild(cell);
                         hour += span;
                     } else if (isReservedMiddle) {
                         hour++;
@@ -175,46 +184,53 @@
                         const cell = createCell(`Was Available`, false);
                         cell.classList.add('was-available');
                         cell.style.gridColumn = `span ${span}`;
-                        schedule.appendChild(cell);
+                        row.appendChild(cell);
                     } else {
                         const cell = createCell('', false, facility, hour);
-                        schedule.appendChild(cell);
+                        row.appendChild(cell);
                         hour++;
                     }
                 }
+                schedule.appendChild(row);
             });
         }
-    
+
         function updateDateInput() {
             const input = document.getElementById('selected-date');
             input.valueAsDate = currentDate;
         }
-    
+
+        function setDate() {
+            const element = document.getElementById('set-date');
+            const input = document.getElementById('selected-date');
+            element.value = input.value;
+        }
+
         document.getElementById('prev-date').addEventListener('click', () => {
             currentDate.setDate(currentDate.getDate() - 1);
             refreshSchedule();
         });
-    
+
         document.getElementById('next-date').addEventListener('click', () => {
             currentDate.setDate(currentDate.getDate() + 1);
             refreshSchedule();
         });
-    
+
         document.getElementById('selected-date').addEventListener('change', (e) => {
             currentDate = new Date(e.target.value);
             refreshSchedule();
         });
-    
+
         function createCell(content, isHeader = false, facility = null, hour = null) {
             const div = document.createElement('div');
             div.className = 'cell';
             if (isHeader) div.classList.add('header');
             div.textContent = content;
-    
+
             if (!isHeader && !div.classList.contains('reserved') && !div.classList.contains('was-available')) {
                 div.dataset.facility = facility;
                 div.dataset.hour = hour;
-    
+
                 div.addEventListener('mousedown', () => {
                     if (!isDateValid()) {
                         triggerInvalidDateFeedback();
@@ -225,7 +241,7 @@
                     clearSelection();
                     div.classList.add('selected');
                 });
-    
+
                 div.addEventListener('mouseenter', () => {
                     if (!isDragging || !isDateValid()) return;
                     if (div.dataset.facility === dragStartCell.dataset.facility) {
@@ -233,7 +249,7 @@
                         highlightRange(dragStartCell, div);
                     }
                 });
-    
+
                 div.addEventListener('mouseup', () => {
                     if (!isDragging || !isDateValid()) return;
                     isDragging = false;
@@ -241,21 +257,20 @@
                     openDragModal(dragStartCell, dragEndCell);
                 });
             }
-    
+
             return div;
         }
-    
+
         document.addEventListener('mouseup', () => {
             isDragging = false;
         });
-    
+
         function highlightRange(start, end) {
             const facility = start.dataset.facility;
             const startHour = parseInt(start.dataset.hour);
             const endHour = parseInt(end.dataset.hour);
-    
             const [minHour, maxHour] = [startHour, endHour].sort((a, b) => a - b);
-    
+
             const allCells = document.querySelectorAll(`.cell[data-facility='${facility}']`);
             allCells.forEach(cell => {
                 const h = parseInt(cell.dataset.hour);
@@ -264,51 +279,51 @@
                 }
             });
         }
-    
+
         function clearSelection() {
             document.querySelectorAll('.cell.selected').forEach(c => c.classList.remove('selected'));
         }
-    
+
         function formatHour(hour) {
             return hour < 12 ? `${hour}:00 AM` : `${hour === 12 ? 12 : hour - 12}:00 PM`;
         }
-    
+
         function openDragModal(startCell, endCell) {
             const facility = startCell.dataset.facility;
             const h1 = parseInt(startCell.dataset.hour);
             const h2 = parseInt(endCell.dataset.hour);
             const [startHour, endHour] = [h1, h2].sort((a, b) => a - b);
-    
+
             document.getElementById('modal').classList.remove('hidden');
             document.getElementById('modal-facility').value = `${facility}`;
             document.getElementById('start-time').value = `${String(startHour).padStart(2, '0')}:00`;
             document.getElementById('end-time').value = `${String(endHour + 1).padStart(2, '0')}:00`;
-    
+
             document.getElementById('confirm-btn').onclick = () => {
                 const start = parseInt(document.getElementById('start-time').value.split(':')[0]);
                 const end = parseInt(document.getElementById('end-time').value.split(':')[0]);
                 const dateKey = currentDate.toISOString().split('T')[0];
                 const reservedSlots = reservationsByDate[dateKey] || [];
-    
+
                 const conflict = reservedSlots.some(r =>
                     r.facility === facility && !(end <= r.start || start >= r.end)
                 );
-    
+
                 if (conflict) {
                     alert("Time slot conflict! Please select another time.");
                     document.getElementById('modal').classList.add('hidden');
                     return;
                 }
-    
+
                 const params = new URLSearchParams({ facility, start, end, date: dateKey });
-                fetch("/ReserveSchedule/{{id}}", { method: "POST" });
+                fetch("/ReserveSchedule/{{id}}", { method: "POST", body: params });
             };
-    
+
             document.getElementById('cancel-btn').onclick = () => {
                 document.getElementById('modal').classList.add('hidden');
             };
         }
-    
+
         function isDateValid() {
             const selected = new Date(currentDate);
             const base = new Date(today);
@@ -316,14 +331,13 @@
             base.setHours(0, 0, 0, 0);
             return selected >= base;
         }
-    
+
         function triggerInvalidDateFeedback() {
             const input = document.getElementById('selected-date');
-            input.classList.add('invalid-date');
-            input.classList.add('shake');
+            input.classList.add('invalid-date', 'shake');
             setTimeout(() => input.classList.remove('shake'), 300);
         }
-    
+
         document.getElementById('selected-date').addEventListener('input', () => {
             if (isDateValid()) {
                 document.getElementById('selected-date').classList.remove('invalid-date');
@@ -339,10 +353,11 @@
 
         function refreshSchedule() {
             updateDateInput();
+            setDate();
             generateSchedule();
         }
-    
+
         refreshSchedule();
     </script>
 </body>
-</html> 
+</html>

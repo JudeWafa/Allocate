@@ -475,9 +475,19 @@ footer {
     justify-content: center;
 }
 
+#reject {
+    text-decoration: none;
+    color: red;
+}
+
 #approve {
     text-decoration: none;
     color: green;
+}
+
+#back {
+    text-decoration: none;
+    color: var(--blue);
 }
 
 #psut-logo {

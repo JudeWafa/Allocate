@@ -209,9 +209,9 @@
                         </div>
                     </div>
                     <div class="button-wrapper">
-                        <button id="back" onclick="history.back()">Back</button>
+                        <button id="back" onclick="window.location.href='/ViewAllRequests'"><a href="/ViewAllRequests" id="back">Back</a></button>
                         {% if res.status == 0 %}
-                            <button id="rejectRequest"><a href="/rejectRequest/{{res.reservationId}}" id="approve">Reject</a></button>
+                            <button id="rejectRequest"><a href="/rejectRequest/{{res.reservationId}}" id="reject">Reject</a></button>
                             <button id="approveRequest"><a href="/approveRequest/{{res.reservationId}}" id="approve">Approve</a></button>
                         {% else %}
                             <button id="rejectRequest" class="blocked" disabled>Reject</button>

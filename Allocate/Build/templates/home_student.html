@@ -42,55 +42,68 @@
                     </svg>
                 </button>
                 <div class="card-carousel" id="card-carousel">
-                    <div class="card">
-                        <p class="card-header">Reserve a <span class="card-title">Lecture Room</span></p>
-                        <p class="card-subtitle">See all available rooms at a certain time at a press of a button</p>
-                        <div class="time-wrapper">
-                            <input type="date" id="room-date-select" class="date-selector">
-                            <span class="at-symbol">:</span>
-                            <select id="room-start-time-select" name="room-start-time" class="time-selector"></select>
-                            <span class="to-symbol">—</span>
-                            <select id="room-end-time-select" name="room-end-time" class="time-selector"></select>
+                    <form method="post" action="/homeReserve/{{id}}">
+                        <div class="card">
+                            <p class="card-header">Reserve a <span class="card-title">Lecture Room</span></p>
+                            <p class="card-subtitle">See all available rooms at a certain time at a press of a button</p>
+                            <div class="time-wrapper">
+                                <input type="text" value="room" name="facility" hidden>
+                                <input type="date" id="room-date-select" class="date-selector" name="date">
+                                <span class="at-symbol">:</span>
+                                <select id="room-start-time-select" name="room-start-time" class="time-selector"></select>
+                                <span class="to-symbol">—</span>
+                                <select id="room-end-time-select" name="room-end-time" class="time-selector"></select>
+                            </div> 
+                            <button id="room-check-button" class="check-button" type="submit">Reserve</button>
+                        </div>
+                    </form>
+                    <form method="post" action="/homeReserve/{{id}}">
+                        <div class="card">
+                            <p class="card-header">Reserve an <span class="card-title">Auditorium</span></p>
+                            <p class="card-subtitle">See all available auditoriums at a certain time at a press of a button</p>
+                            <div class="time-wrapper">
+                                <input type="text" value="auditorium" name="facility" hidden>
+                                <input type="date" id="auditorium-date-select" class="date-selector" name="date">
+                                <span class="at-symbol">:</span>
+                                <select id="auditorium-start-time-select" name="auditorium-start-time" class="time-selector"></select>
+                                <span class="to-symbol">—</span>
+                                <select id="auditorium-end-time-select" name="auditorium-end-time" class="time-selector"></select>
+                            </div>
+                            <button id="auditorium-check-button" class="check-button" type="submit">Reserve</button>
+                        </div>
+                    </form>
+                    <form method="post" action="/homeReserve/{{id}}">
+                        <div class="card">
+                            <p class="card-header">Reserve a <span class="card-title">Lab</span></p>
+                            <p class="card-subtitle">See all available labs at a certain time at a press of a button</p>
                             
-                        </div> 
-                        <button id="room-check-button" class="check-button">Check</button>
-                    </div>
-                    <div class="card">
-                        <p class="card-header">Reserve an <span class="card-title">Auditorium</span></p>
-                        <p class="card-subtitle">See all available auditoriums at a certain time at a press of a button</p>
-                        <div class="time-wrapper">
-                            <input type="date" id="auditorium-date-select" class="date-selector">
-                            <span class="at-symbol">:</span>
-                            <select id="auditorium-start-time-select" name="auditorium-start-time" class="time-selector"></select>
-                            <span class="to-symbol">—</span>
-                            <select id="auditorium-end-time-select" name="auditorium-end-time" class="time-selector"></select>
+                            <div class="time-wrapper">
+                                <input type="text" value="lab" name="facility" hidden>
+                                <input type="date" id="lab-date-select" class="date-selector" name="date">
+                                <span class="at-symbol">:</span>
+                                <select id="lab-start-time-select" name="lab-start-time" class="time-selector"></select>
+                                <span class="to-symbol">—</span>
+                                <select id="lab-end-time-select" name="lab-end-time" class="time-selector"></select>
+                            </div>
+                            <button id="lab-check-button" class="check-button" type="submit" >Reserve</button>
                         </div>
-                        <button id="auditorium-check-button" class="check-button">Check</button>
-                    </div>
-                    <div class="card">
-                        <p class="card-header">Reserve a <span class="card-title">Lab</span></p>
-                        <p class="card-subtitle">See all available labs at a certain time at a press of a button</p>
-                        <div class="time-wrapper">
-                            <input type="date" id="lab-date-select" class="date-selector">
-                            <span class="at-symbol">:</span>
-                            <select id="lab-start-time-select" name="lab-start-time" class="time-selector"></select>
-                            <span class="to-symbol">—</span>
-                            <select id="lab-end-time-select" name="lab-end-time" class="time-selector"></select>
+                    </form>
+                    <form method="post" action="/homeReserve/{{id}}">
+                        <div class="card">
+                            <p class="card-header">Reserve an <span class="card-title">Outdoor Space</span></p> 
+                            <p class="card-subtitle">See all available outdoor spaces at a certain time at a press of a button</p>
+                            <div class="time-wrapper">
+                                <input type="text" value="outdoor" name="facility" hidden>
+                                <input type="date" id="outdoor-date-select" class="date-selector" name="date">
+                                <span class="at-symbol">:</span>
+                                <select id="outdoor-start-time-select" name="outdoor-start-time" class="time-selector"></select>
+                                <span class="to-symbol">—</span>
+                                <select id="outdoor-end-time-select" name="outdoor-end-time" class="time-selector"></select>
+                            </div> 
+                        
+                            <button id="outdoor-check-button" class="check-button" type="submit">Reserve</button>
                         </div>
-                        <button id="lab-check-button" class="check-button">Check</button>
-                    </div>
-                    <div class="card">
-                        <p class="card-header">Reserve an <span class="card-title">Outdoor Space</span></p> 
-                        <p class="card-subtitle">See all available outdoor spaces at a certain time at a press of a button</p>
-                        <div class="time-wrapper">
-                            <input type="date" id="outdoor-date-select" class="date-selector">
-                            <span class="at-symbol">:</span>
-                            <select id="outdoor-start-time-select" name="outdoor-start-time" class="time-selector"></select>
-                            <span class="to-symbol">—</span>
-                            <select id="outdoor-end-time-select" name="outdoor-end-time" class="time-selector"></select>
-                        </div> 
-                        <button id="outdoor-check-button" class="check-button">Check</button>
-                    </div>  
+                    </form>  
                 </div>
                 <button class="scroll-arrow"  id="right-arrow" aria-label="Scroll Right">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#001871" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -137,11 +150,7 @@
         <ul class="footer-options">
             <li><a href="/AboutUsAcademic">About Us</a></li>
             <li><a href="/ContactUsAcademic">Contact</a></li>
-            <li id="logout-tab">
-                    <button onclick="window.location.href='/logIn'" id="logout-button">
-                        <span id="logout" class="material-symbols-outlined">logout</span>
-                    </button>
-                </li>
+            
             </ul>
     </footer>
 
@@ -238,7 +247,7 @@
         }
 
 // Apply to all reservation types
-['Room', 'Auditorium', 'Lab', 'Outdoor'].forEach(populateTimeSelectsBasedOnDate);
+['room', 'auditorium', 'lab', 'outdoor'].forEach(populateTimeSelectsBasedOnDate);
 
     
         // disable past dates
@@ -298,7 +307,7 @@
         }
 
         // Apply to all reservation types
-        ['Room', 'Auditorium', 'Lab', 'Outdoor'].forEach(validateDateTime);
+        ['room', 'auditorium', 'lab', 'outdoor'].forEach(validateDateTime);
 
     </script>
     

@@ -77,21 +77,41 @@
                         <div class="section-content">
                             <label for="facility-type">Facility Type <span class="red-star">*</span></label> <br>
                             <select name="facilityType" id="facility-type" required>
+                            {% if type == "auditorium" %}
+                                <option selected value="Auditorium">Auditorium</option>
+                            {% else %}
                                 <option value="Auditorium">Auditorium</option>
+                            {% endif %}
+                            {% if type == "lab" %}
+                                <option selected value="Lab">Lab</option>
+                            {% else %}
                                 <option value="Lab">Lab</option>
+                            {% endif %}
+                            {% if type == "room" %}   
+                                <option value="Room" selected>Lecture Room</option>
+                            {% else %}
                                 <option value="Room">Lecture Room</option>
+                            {% endif %}
+                            {% if type == "outdoor" %}  
+                                <option value="Outdoor" selected>Outdoor Space</option>
+                            {% else %}
                                 <option value="Outdoor">Outdoor Space</option>
+                            {% endif %}
                             </select> <br>
                             <label for="capacity">Capacity <span class="red-star">*</span></label> <br>
                             <input name="capacity" type="number" id="capacity" value="0" step="5" required> <br>
                             <label for="building">Building <span class="red-star">*</span></label> <br>
                             <select name="building" id="building" required>
-                                <option value=1>King Hussein School of Computing Sciences</option>
+                                <option value=1 selected>King Hussein School of Computing Sciences</option>
                                 <option value=2>King Abdullah II School of Engineering</option>
                                 <option value=3>King Talal School of Business Technology</option>
                             </select> <br>
                             <label for="date">Date <span class="red-star">*</span></label> <br>
-                            <input name="date" type="date" id="date"> <br>
+                            {% if date %}
+                                <input name="date" type="date" id="date" value="{{date}}"> <br>
+                            {% else %}
+                                <input name="date" type="date" id="date"> <br>
+                            {% endif %}
                             <label for="start_time">Start Time <span class="red-star">*</span></label> <br>
                             {% if start %}
                                 <input name="start_time" type="time" id="start_time" value="{{start}}"><br>
@@ -114,13 +134,8 @@
                                         const buildingInput = document.getElementById('building');
                                         const typeInput = document.getElementById('facility-type');
                                         const capacityInput = document.getElementById('capacity');
-
-
-                                        // Attach event listeners
-                                        [dateInput, startInput, endInput, buildingInput, typeInput, capacityInput].forEach(input => {
-                                            input.addEventListener('change', checkAvailability);
-                                        });
-
+                                        const facilityList = document.getElementById('facility');
+                                
                                         function checkAvailability() {
                                             const date = dateInput.value;
                                             const startTime = startInput.value;
@@ -128,10 +143,9 @@
                                             const building = buildingInput.value;
                                             const type = typeInput.value;
                                             const capacity = capacityInput.value;
-
-                                            // Only call backend if all 3 fields have values
-                                            if (!date || !startTime || !endTime|| !building || !type || !capacity) return;
-
+                                
+                                            if (!date || !startTime || !endTime || !building || !type || !capacity) return;
+                                
                                             fetch('/checkAvailability', {
                                                 method: 'POST',
                                                 headers: {'Content-Type': 'application/json'},
@@ -139,27 +153,29 @@
                                             })
                                             .then(res => res.json())
                                             .then(data => {
-                                                const list = document.getElementById('facility');
-                                                list.innerHTML = ''; // Clear previous results
-
+                                                facilityList.innerHTML = '';
+                                
                                                 if (data.length === 0) {
-                                                    list.innerHTML = '<option>No facilities available for this time.</option>';
+                                                    facilityList.innerHTML = '<option>No facilities available for this time.</option>';
                                                 } else {
                                                     data.forEach(facility => {
                                                         const item = document.createElement('option');
-                                                        // if (facility == {{facility}}){
-                                                        //     item.selected = true;
-                                                        // }
                                                         item.text = facility.name;
-                                                        list.appendChild(item);
+                                                        item.value = facility.name;
+                                                        facilityList.appendChild(item);
                                                     });
                                                 }
                                             });
                                         }
+                                
+                                        [dateInput, startInput, endInput, buildingInput, typeInput, capacityInput].forEach(input => {
+                                            input.addEventListener('change', checkAvailability);
+                                        });
+                                
+                                        checkAvailability();
                                     });
-                                    // fetch('/ReserveForm', {
-                                    //             method: 'POST'})
                                 </script>
+                                
                             </select> 
                         </div>
                     </div>

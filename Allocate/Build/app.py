@@ -11,8 +11,7 @@ from Build.DBCreation import Users, Reservations, Facility, Buildings, Reports, 
 from Build.DBCreation import Media, MediaRequests, Transport, TransportRequests, Hospitality, HospitalityRequests, Equipment
 from Build.DBCreation import ClubCommittee, Instructors, Clubs, Registration, StudentAffairs, Department, Technicians
 from datetime import date, time
-from Build.AIModel import AIModel
-import hashlib
+from Build.SchedulerModel import SchedulerModel
 from flask_mail import Mail, Message
 from email.message import EmailMessage
 import smtplib
@@ -29,7 +28,7 @@ app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
 app.config['MAIL_USE_SSL'] = True
 app.config['MAIL_USERNAME'] = 'allocatepsut@gmail.com'
-app.config['MAIL_PASSWORD'] = 'tcipiacjtaorprty'  # Use an app password, NOT your Gmail password
+app.config['MAIL_PASSWORD'] = 'ctdymoanplsnoutn'  # Use an app password, NOT your Gmail password
 app.config['MAIL_DEFAULT_SENDER'] = 'allocatepsut@gmail.com'
 
 mail = Mail(app)
@@ -38,7 +37,6 @@ engine = create_engine("sqlite:///Databases.db", echo=True)
 Session = sessionmaker(bind=engine)
 session = Session()
 
-hashObject = hashlib.sha256()
 
 @app.route("/logIn", methods=["GET", "POST"])
 def logIn():
@@ -53,11 +51,9 @@ def logIn():
             return render_template("login.html", message = "Invalid username")
         
         password = session.query(Users.password).filter_by(email=request.form["email"]).first()[0]
-        # password = hashlib.sha256(password.encode('utf-8')).hexdigest()
         print("pass = ", password)
         print("password")
         entered_password_bytes = request.form["password"].encode('utf-8')
-        # return bcrypt.checkpw(entered_password_bytes, password)
         if bcrypt.checkpw(entered_password_bytes, password):
             name = session.query(Users.userName).filter_by(email=request.form["email"]).first()[0]
             id = session.query(Users.userId).filter_by(email=request.form["email"]).first()[0]
@@ -89,10 +85,12 @@ def ForgotPassword():
         msg['To'] = request.form["email"]
         userId = session.query(Users.userId).filter_by(email = request.form["email"]).first()[0]
         msg.set_content('Did you forget your password?\nReset password here: ' + request.host + str(url_for("resetPassword", id = userId)))
-
-        with smtplib.SMTP_SSL(app.config['MAIL_SERVER'], 465) as smtp:
+        with smtplib.SMTP_SSL(app.config['MAIL_SERVER'], app.config['MAIL_PORT']) as smtp:
             smtp.login(app.config['MAIL_USERNAME'], app.config['MAIL_PASSWORD']) 
             smtp.send_message(msg)
+
+
+
     
     return render_template("forgot_password.html")
 
@@ -102,22 +100,15 @@ def resetPassword(id):
     
     if request.method == "POST":
         new_password = request.form["password"]
+
         password_bytes = new_password.encode('utf-8')
+        hashed = bcrypt.hashpw(password_bytes, bcrypt.gensalt())
 
-        hash_object = hashlib.sha256()
-
-        hash_object.update(password_bytes)
-
-        hashed_password = hash_object.hexdigest()
-        user.password = hashed_password
+        user.password = hashed
                 
         session.commit()
     
     return render_template("reset_password.html", email=user.email)
-
-
-
-
 
 
 
@@ -180,7 +171,6 @@ def reportIssue(resId):
         print("reservation.facilityId = ", reservation.facilityId)
         print(equipments)
         if len(equipments) == 0:
-            print("yup")
             equipments = None
 
         return render_template("report_student.html", id = reservation.reservedBy, equipment = equipments, facility=facility)
@@ -190,11 +180,10 @@ def reportIssue(resId):
         description = request.form["description"]
         facility_id = reservation.facilityId
         equipment_name = request.form["equipment"]
-        print("smth = ", equipment_name)
         
         if equipment_name != "No equipment found.":
             equipment_id = session.query(Equipment.equipmentId).filter_by(name = equipment_name).first()[0]
-            report = Reports(equipment_id, description, facility_id, None, None, reservation.reservedBy, 0)
+            report = Reports(equipment_id, description, facility_id, None, "", reservation.reservedBy, 0)
             # print(reservation.reportId)
             print("reportId = ", report.reportId)
             session.add(report)
@@ -202,6 +191,10 @@ def reportIssue(resId):
             print("reportId = ", report.reportId)
             reservation.reportId = report.reportId
             session.commit()
+
+
+            return redirect(url_for("viewReservations", id=reservation.reservedBy))
+        
     print("res = ", reservation.reservedBy)
     return render_template("report_student.html", id = reservation.reservedBy)
 
@@ -217,14 +210,36 @@ def viewReport(reportId, id):
 
 @app.route("/ReserveSchedule/<int:id>", methods=["GET", "POST"])
 def reserveSchedule(id):
-    # print("meow")
     if request.method == "POST":
-        print("hola")
+        date_ = request.form["date"]
         start = request.form["start"]
         end = request.form["end"]
         facility = request.form["facility"]
-        return redirect(url_for("reserveForm", id=id, start=start, end=end, facility=facility))
-    return render_template("reserve_student.html", id=id)
+        return redirect(url_for("reserveForm", id=id, start=start, end=end, facility=facility, date=date_))
+    reservations = session.query(Reservations).filter_by(status = 1).all()
+    res = []
+    for r in reservations:
+        d = {}
+        d["facility"] = session.query(Facility.facilityName).filter_by(facilityId = r.facilityId).first()[0]
+        d["start"] = r.start.hour
+        d["end"] = r.end.hour
+        d["date"] = r.date.isoformat()
+        res.append(d)
+    
+    print("res = ", res)
+    
+    return render_template("reserve_student.html", id=id, reservations = res)
+
+@app.route("/homeReserve/<int:id>", methods=["POST", "GET"])
+def homeReserve(id):
+    facility = request.form["facility"]
+    date = request.form["date"]
+    SID = facility + "-start-time"
+    EID = facility + "-end-time"
+    print(SID)
+    start = request.form[SID]
+    end = request.form[EID]
+    return redirect(url_for("reserveForm", id=id, facilityType=facility, start=start, end=end, date=date))
 
 
 @app.route("/ReserveForm/<int:id>", methods = ["POST", "GET"])
@@ -234,8 +249,10 @@ def reserveForm(id):
         start = request.args.get("start")
         end = request.args.get("end")
         facility = request.args.get("facility")
+        facilityType = request.args.get("facilityType")
+        date = request.args.get("date")
 
-        return render_template("reservation_form.html", id=id, start=start, end=end, facility=facility)
+        return render_template("reservation_form.html", id=id, start=start, end=end, facility=facility, type=facilityType, date=date)
 
     if request.method == "POST":
         title = request.form["eventTitle"]
@@ -244,6 +261,8 @@ def reserveForm(id):
         start = datetime.strptime(request.form["start_time"], "%H:%M").time()
         end = datetime.strptime(request.form["end_time"], "%H:%M").time()
         facilityName = request.form["facility"]
+        if facilityName == "No facilities available for this time.":
+            return redirect(url_for("reserveForm", id=id))
         facilityId = session.query(Facility.facilityId).filter_by(facilityName=facilityName).first()[0]
         fundSource = request.form["fundingSource"]
         fundAmount = request.form["fundingAmount"]
@@ -275,7 +294,6 @@ def reserveForm(id):
 
         ####### Preparations #######
         if "flowers" in checked_boxes:
-            print("bsbsbs")
             prep = PreparationsRequests(1, resId, None)
             session.add(prep)
         
@@ -412,6 +430,16 @@ def reserveForm(id):
 
         session.commit()
 
+        msg = EmailMessage()
+        msg['Subject'] = 'Request succesfully made!'
+        msg['From'] = app.config['MAIL_USERNAME']
+        msg['To'] = session.query(Users.email).filter_by(userId = id).first()[0]
+        msg.set_content('Request succesfully made!\n\nRequest info:\nTitle: ' + title + '\nFacility: ' + facilityName + '\nDate: ' + str(date) + '\nTime: ' + str(start) )
+        with smtplib.SMTP_SSL(app.config['MAIL_SERVER'], app.config['MAIL_PORT']) as smtp:
+            smtp.login(app.config['MAIL_USERNAME'], app.config['MAIL_PASSWORD']) 
+            smtp.send_message(msg)
+        return redirect(url_for("viewRequests", id=id))
+
     return render_template("reservation_form.html", id=id)
 
 @app.route("/checkAvailability", methods=["POST", "GET"])
@@ -441,7 +469,6 @@ def checkAvailability():
         Facility.facilityType == type,
         Facility.capacity >= capacity).all()
     
-    print("wtf")
     print(available)
 
     return jsonify([{'id': f.facilityId, 'name': f.facilityName} for f in available])
@@ -482,7 +509,7 @@ def generateSchedule():
         start_date = request.form["startDate"]
         end_date = request.form["endDate"]
 
-        AIModel.generateExamSchedule(start_date, end_date)
+        SchedulerModel.generateExamSchedule(start_date, end_date)
 
     return render_template("schedule_registration.html")
 
@@ -588,7 +615,7 @@ def rejectRequest(reqId):
     request = session.query(Reservations).filter_by(reservationId=reqId).first()
     request.status = 2
     session.commit()
-    return redirect(url_for("ViewPendingRequests", reqId=reqId))
+    return redirect(url_for("viewPendingRequests", reqId=reqId))
 
 @app.route("/RequestApproval/<int:reqId>", methods = ["GET", "POST"])
 def requestApproval(reqId):
@@ -639,6 +666,35 @@ def viewPendingReports():
             })
         
     return render_template("pending_technician.html", reports=result)
+
+
+@app.route("/resolveReport/<int:reportId>", methods=["POST", "GET"])
+def resolveReport(reportId):
+    # if request.method == "POST":
+    report = session.query(Reports).filter_by(reportId=reportId).first()
+    report.status = 1
+    session.commit()
+    return redirect(url_for("viewAllReports"))
+
+
+@app.route("/ViewReportTechnician/<int:reportId>", methods=["POST", "GET"])
+def viewReportTechnician(reportId):
+    report = session.query(Reports).filter_by(reportId = reportId).first()
+    if request.method == "GET":
+        facilityName = session.query(Facility.facilityName).filter_by(facilityId = report.facilityId).first()[0]
+        equipmentName = session.query(Equipment.name).filter_by(equipmentId = report.equipmentId).first()[0]
+    
+        return render_template("report_technician.html", 
+                               facility = facilityName, equipment = equipmentName, comment=report.technicianComment,
+                               description = report.reportInfo, id = id, reportId=reportId, status=report.status)
+    
+    if request.method == "POST":
+        comment = request.form["comment"]
+        report.technicianComment = comment
+        session.commit()
+        return redirect("/ViewPendingReports")
+    
+    return render_template("report_technician.html")
 
 
 
@@ -784,23 +840,6 @@ def ContactUsRegistration():
 @app.route("/ContactUsTechnician")
 def ContactUsTechnician():
     return render_template("contact_us_technician.html")
-
-@app.route("/ViewReportTechnician/<int:reportId>", methods=["POST", "GET"])
-def viewReportTechnician(reportId):
-    report = session.query(Reports).filter_by(reportId = reportId).first()
-    if request.method == "GET":
-        facilityName = session.query(Facility.facilityName).filter_by(facilityId = report.facilityId).first()[0]
-        equipmentName = session.query(Equipment.name).filter_by(equipmentId = report.equipmentId).first()[0]
-    
-        return render_template("report_technician.html", facility = facilityName, equipment = equipmentName, description = report.reportInfo, id = id)
-    
-    if request.method == "POST":
-        comment = request.form["comment"]
-        report.technicianComment = comment
-        session.commit()
-        return redirect("/ViewPendingReports")
-    
-    return render_template("report_technician.html")
 
 
 @app.route("/test")

@@ -36,10 +36,14 @@
                         <label for="description" >Description of issue per equipment <span class="red-star">*</span></label>
                         <textarea id="description" value="{{description}}" maxlength="1500" rows="20" readonly>{{description}}</textarea>
                         <label for="comments">Add any description or comments</label>
-                        <textarea id="comments" name="comment" maxlength="1500" rows="20"></textarea>
+                        <textarea id="comments" name="comment" maxlength="1500" rows="20">{{comment}}</textarea>
                         <div class="button-wrapper">
                             <input type="submit" value="Save" id="save-button">
-                            <button id="resolve-button" onclick="window.location.href='/ViewAllReports'">Resolve</button>
+                            {% if status %}
+                                <button id="resolve-button" disabled>Resolved</button>
+                            {% else %}
+                                <button id="resolve-button"><a href="/resolveReport/{{reportId}}" id="resolve">Resolve</a></button>
+                            {% endif %}
                         </div>
                     </form>
                 </div>

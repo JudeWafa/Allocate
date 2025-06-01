@@ -67,7 +67,11 @@
                                     <td>{{ rep.facility }}</td>
                                     <td>{{ rep.description }}</td>
                                     <td></td>
-                                    <td><button class="resolve-button">Resolve</button></td>
+                                    {% if rep.status %}
+                                        <td><button class="resolved" disabled>Resolved</button></td>
+                                    {% else %}
+                                        <td><button class="resolve-button" ><a href="/resolveReport/{{rep.reportId}}" id="resolve">Resolve</a></button></td>
+                                    {% endif %}
                                     <td>
                                         <a href="/ViewReportTechnician/{{rep.reportId}}">
                                             <span class="more-arrow">

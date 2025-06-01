@@ -86,6 +86,7 @@ li {
 #reserve-button {
     background-color: var(--dark-blue);
     border-radius: 7px;
+    text-decoration: none;
 }
 
 #reservations-button {
@@ -335,12 +336,25 @@ thead, tbody tr {
     font-size: 1.1rem;
     border: solid 2px #000;
     cursor: pointer;
+    text-decoration: none;
+}
+
+#resolve{
+    text-decoration: none;
+    color:black;
 }
 
 .resolved {
     color: #068B20;
-    border: solid 2px #068B20;
     cursor: auto;
+    width: 90%;
+    height: 52px;
+    border-radius: 13px;
+    background-color: white;
+    font-family: var(--font-family-roboto);
+    font-size: 1.1rem;
+    border: solid 2px #068B20;
+    text-decoration: none;
 }
 
 .pending {

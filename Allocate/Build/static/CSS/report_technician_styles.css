@@ -255,6 +255,12 @@ button:hover {
     width: 25%;
     justify-items: end;
     border: 2px solid var(--blue);
+    text-decoration: none;
+}
+
+#resolve{
+    text-decoration: none;
+    color: white;
 }
 
 #resolve-button:hover, #save-button:hover {
